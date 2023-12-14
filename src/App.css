@@ -1,0 +1,48 @@
+* {
+    margin: 0;
+    border: 0;
+    box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+    height: 100%;
+}
+
+body {
+    background-image: url('./assets/images/background-texture.png');
+    background-color: #3A3A3A;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100%;
+}
+
+.home {
+    background-image: url('./assets/images/cat-eyesl.png');
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 100%;
+    max-width: 1055px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    padding: 0 48px;
+}
+
+.logo{
+    width: 100%;
+    max-width: 376px;
+}
+
+.salem-lady{
+    width: 100%;
+    max-width: 368px;
+}
