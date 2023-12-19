@@ -33,7 +33,7 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 15px;
+    gap: 16px;
     padding: 0 48px;
 }
 
