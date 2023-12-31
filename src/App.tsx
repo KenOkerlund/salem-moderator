@@ -1,6 +1,7 @@
 import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from './views/Home'
+import Settings from './views/Settings'
 
 function App() {
 	return (
@@ -8,6 +9,7 @@ function App() {
 			<BrowserRouter>
 				<Routes>
 					<Route index element={<Home />} />
+					<Route path="/settings" element={<Settings />} />
 				</Routes>
 			</BrowserRouter>
 		</main>
