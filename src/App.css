@@ -17,8 +17,6 @@ body {
 
 main {
     display: flex;
-    justify-content: center;
-    align-items: center;
     min-height: 100%;
 }
 
@@ -45,4 +43,21 @@ main {
 .salem-lady{
     width: 100%;
     max-width: 368px;
+}
+
+.settings-players{
+    width: 100%;
+}
+
+.settings-players-names{
+    display: flex;
+    flex-direction: column;
+    gap: 19px;
+    padding: 0px 20px;
+}
+
+.settings-players-names input{
+    height: 36px;
+    max-width: 349px;
+    min-width: 269px;
 }
