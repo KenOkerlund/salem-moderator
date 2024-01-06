@@ -11,19 +11,20 @@ button {
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.border {
     border: 1px solid #F1ECCB;
     border-radius: 50px;
 }
 
-.button-spacing-large{
+.button--borderless {
+    border: none;
+}
+
+.button--large{
     padding: 1px 121px;
     max-width: 375px;
 }
 
-.button-text-small{
+.button--small{
     font-size: 30px;
     letter-spacing: 3px;
 }

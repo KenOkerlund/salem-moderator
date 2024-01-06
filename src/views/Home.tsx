@@ -7,8 +7,8 @@ function Home() {
         <div className='home'>
             <img src={ModeratorLogo} alt="Salem Moderator logo" className='logo' />
             <img src={highlightedPerson} alt="Lady" className='salem-lady' />
-            <Button text="BEGIN" className="border button-spacing-large"/>
-            <Button text="SYNC DEVICE" className="button-text-small" />
+            <Button size="large">BEGIN</Button>
+            <Button variation="secondary" size="small">SYNC DEVICE</Button>
         </div>
     )
 }
