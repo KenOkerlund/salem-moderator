@@ -1,42 +1,48 @@
+* {
+    margin: 0;
+    border: 0;
+    box-sizing: border-box;
+}
+
+html,
+body,
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+    height: 100%;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+body {
+    background-image: url('./assets/images/background-texture.png');
+    background-color: #3A3A3A;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100%;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.home {
+    background-image: url('./assets/images/cat-eyesl.png');
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 100%;
+    max-width: 1055px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    padding: 0 48px;
 }
 
-.card {
-  padding: 2em;
+.logo{
+    width: 100%;
+    max-width: 376px;
 }
 
-.read-the-docs {
-  color: #888;
+.salem-lady{
+    width: 100%;
+    max-width: 368px;
 }

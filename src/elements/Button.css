@@ -1,0 +1,30 @@
+button {
+    color: #F1ECCB;
+    background-color: transparent;
+    font-size: 40px;
+    font-family: IM FELL English SC;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: 4px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #F1ECCB;
+    border-radius: 50px;
+}
+
+.button--borderless {
+    border: none;
+}
+
+.button--large{
+    padding: 1px 121px;
+    max-width: 375px;
+}
+
+.button--small{
+    font-size: 30px;
+    letter-spacing: 3px;
+}
