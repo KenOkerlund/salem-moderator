@@ -26,7 +26,7 @@ main {
     background-size: contain;
     background-repeat: no-repeat;
     width: 100%;
-    max-width: 1055px;
+    /* max-width: 1055px; */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -35,29 +35,60 @@ main {
     padding: 0 48px;
 }
 
-.logo{
+.logo {
     width: 100%;
     max-width: 376px;
 }
 
-.salem-lady{
+.salem-lady {
     width: 100%;
     max-width: 368px;
 }
 
-.settings-players{
-    width: 100%;
-}
-
-.settings-players-names{
+.settings-players {
     display: flex;
     flex-direction: column;
-    gap: 19px;
-    padding: 0px 20px;
+    width: 100%;
+    gap: 13px;
+    padding: 40px 0px 0px 40px;
 }
 
-.settings-players-names input{
+.settings-players h6{
+    font-size: 40px;
+    color: #F1ECCB;
+    line-height: 50.74px;
+    font-weight: 400;
+    letter-spacing: 8px;
+}
+
+.settings-player-list{
+    display: flex;
+    gap: 16px;
+}
+
+.settings-players-names {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+input {
     height: 36px;
+    width: 100%;
     max-width: 349px;
-    min-width: 269px;
+    /* min-width: 269px; */
+    background-color: transparent;
+    border: 1px solid #878787;
+}
+
+input,
+input::placeholder {
+    font-family: Frank Ruh Libre;
+    font-size: 22px;
+    color: #F1ECCB;
+}
+
+input {
+    padding-left: 9px;
 }
