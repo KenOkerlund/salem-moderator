@@ -50,10 +50,10 @@ main {
     flex-direction: column;
     width: 100%;
     gap: 13px;
-    padding: 40px 0px 0px 40px;
+    padding: 40px;
 }
 
-.settings-players h6{
+.settings-players h6 {
     font-size: 40px;
     color: #F1ECCB;
     line-height: 50.74px;
@@ -61,8 +61,9 @@ main {
     letter-spacing: 8px;
 }
 
-.settings-player-list{
+.settings-player-list {
     display: flex;
+    align-items: center;
     gap: 16px;
 }
 
@@ -71,6 +72,10 @@ main {
     display: flex;
     flex-direction: column;
     gap: 16px;
+}
+
+.settings-player-add {
+    margin-left: 48px;
 }
 
 input {
@@ -91,4 +96,33 @@ input::placeholder {
 
 input {
     padding-left: 9px;
+}
+
+.icon--minus,
+.icon--plus {
+    width: 32px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.icon--minus:before,
+.icon--plus:before,
+.icon--plus:after {
+    content: "";
+    width: 18px;
+    height: 6px;
+    background-color: #D9D9D9;
+    border-radius: 1px;
+    flex-shrink: 0;
+}
+
+.icon--plus:before {
+    transform: translateX(9px);
+}
+
+.icon--plus:after {
+    transform: rotate(90deg) translateY(9px);
 }

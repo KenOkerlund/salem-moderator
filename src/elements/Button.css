@@ -6,7 +6,6 @@ button {
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-    letter-spacing: 4px;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -19,12 +18,21 @@ button {
     border: none;
 }
 
-.button--large{
+.button--large {
+    letter-spacing: 4px;
     padding: 1px 121px;
     max-width: 375px;
 }
 
-.button--small{
+.button--small {
     font-size: 30px;
     letter-spacing: 3px;
+}
+
+.button--mini {
+    width: 32px;
+    height: 30px;
+    border-radius: 10%;
+    font-weight: bolder;
+    flex-shrink: 0;
 }
