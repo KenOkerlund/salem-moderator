@@ -78,6 +78,11 @@ main {
     margin-left: 48px;
 }
 
+.settings-players-order{
+    display: flex;
+    gap: 16px;
+}
+
 input {
     height: 36px;
     width: 100%;
