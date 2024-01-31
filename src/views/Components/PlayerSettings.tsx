@@ -5,19 +5,19 @@ function Settings() {
     function createPlayers() {
         return [
             {
-                id: 1,
+                id: 0,
                 name: "Player 1",
             },
             {
-                id: 2,
+                id: 1,
                 name: "Player 2",
             },
             {
-                id: 3,
+                id: 2,
                 name: "Player 3",
             },
             {
-                id: 4,
+                id: 3,
                 name: "Player 4",
             },
         ];
@@ -27,6 +27,8 @@ function Settings() {
 
     const isThereLessThanTwelvePlayers = playerNames.length < 12;
     const isThereMoreThanFourPlayers = playerNames.length > 4;
+    const isThisTheFirstPlayer = (i: number) => i === playerNames[0].id ? true : false;
+    const isThisTheLastPlayer = (i: number) => i === playerNames[playerNames.length - 1].id ? true : false;
 
     function handlePlayerNameChange(e: React.ChangeEvent<HTMLInputElement>, i: number) {
         const copyPlayers = [...playerNames];
@@ -34,7 +36,6 @@ function Settings() {
         setPlayerNames(copyPlayers);
 
     };
-
 
     function addPlayerNameClick() {
         const copyPlayers = [...playerNames];
@@ -49,6 +50,7 @@ function Settings() {
         setPlayerNames(copyPlayers);
     };
 
+
     return (
         <>
             <div className='settings-players'>
@@ -61,16 +63,20 @@ function Settings() {
                                     <Button size='mini' disabled={!isThereMoreThanFourPlayers} onClick={() => removePlayerNameClick(i)}>
                                         <div className='icon--minus'></div>
                                     </Button>
-                                    <input type="text" placeholder={playerName.name} onChange={(e) => handlePlayerNameChange(e, i)} />
+                                    <input type="text" placeholder={playerName.name} onChange={(e) => handlePlayerNameChange(e, playerName.id)} />
+                                    <div className='settings-players-order'>
+                                        {!isThisTheLastPlayer(playerName.id) && <Button size='mini'>⬇</Button>}
+                                        {!isThisTheFirstPlayer(playerName.id) && <Button size='mini'>⬆</Button>}
+                                    </div>
                                 </div>
                             )
                         })
                     }
-                    <div className='settings-player-add'>
+                    {isThereLessThanTwelvePlayers && <div className='settings-player-add'>
                         <Button size="mini" disabled={!isThereLessThanTwelvePlayers} onClick={() => addPlayerNameClick()}>
                             <div className='icon--plus'></div>
                         </Button>
-                    </div>
+                    </div>}
                 </div>
             </div>
         </>
