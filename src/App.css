@@ -78,7 +78,7 @@ main {
     margin-left: 48px;
 }
 
-.settings-players-order{
+.settings-players-order {
     display: flex;
     gap: 16px;
 }
@@ -130,4 +130,13 @@ input {
 
 .icon--plus:after {
     transform: rotate(90deg) translateY(9px);
+}
+
+
+.settings-players-order-buttons {
+    min-width: 115px;
+}
+
+.up-arrow {
+    transform: rotate(180deg);
 }
