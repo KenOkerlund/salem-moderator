@@ -27,8 +27,6 @@ function Settings() {
 
     const [players, setPlayers] = useState(createPlayers());
 
-    const newId = Math.max(...players.map(p => p.id)) + 1
-
     const isThereLessThanTwelvePlayers = players.length < 12;
     const isThereMoreThanFourPlayers = players.length > 4;
     const isThisTheFirstPlayer = (i: number) => i === players[0].id ? true : false;
@@ -43,8 +41,9 @@ function Settings() {
 
     function addPlayerNameClick() {
         const copyPlayers = [...players];
+        const id = Math.max(...players.map(p => p.id)) + 1
         //player.name needs to be 1 value higher than player.id because the index starts at 0 and the name starts at "Player 1"
-        copyPlayers.push({ id: newId, name: `Player ${newId + 1} ` });
+        copyPlayers.push({ id, name: `Player ${id + 1} ` });
         setPlayers(copyPlayers);
     };
 
