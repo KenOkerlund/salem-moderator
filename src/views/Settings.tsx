@@ -1,11 +1,11 @@
-import PlayersList from "./Components/PlayerSettings";
+import PlayersList from './Components/PlayerSettings';
 
 function Settings() {
-    return (
-        <div className="flex-column">
-            <PlayersList />
-        </div>
-    )
+	return (
+		<div className="flex-column">
+			<PlayersList />
+		</div>
+	);
 }
 
 export default Settings;
