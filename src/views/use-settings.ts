@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { Player } from '../types';
+
 const maxPlayers = 12;
 const minPlayers = 4;
 
-function createPlayers() {
+export function createPlayers(): Player[] {
 	return [
 		{
 			id: 0,
@@ -24,11 +26,14 @@ function createPlayers() {
 }
 
 export default function useSettings() {
-	const [players, setPlayers] = useState(createPlayers());
+	const [players, setPlayers] = useState<Player[]>(createPlayers());
 
 	const changePlayerName = (e: React.ChangeEvent<HTMLInputElement>, id: number) => {
 		const copyPlayers = [...players];
 		const player = copyPlayers.find(p => p.id === id);
+		if (!player) {
+			return;
+		}
 		player.name = e.target.value;
 		setPlayers(copyPlayers);
 	};
@@ -44,7 +49,7 @@ export default function useSettings() {
 		setPlayers(copyPlayers);
 	};
 
-	const removePlayer = (id: number) => {
+	const removePlayer = (id: Player['id']) => {
 		if (players.length <= minPlayers) {
 			return;
 		}
@@ -52,7 +57,7 @@ export default function useSettings() {
 		setPlayers(copyPlayers);
 	};
 
-	const movePlayerDown = (id: number) => {
+	const movePlayerDown = (id: Player['id']) => {
 		const copyPlayers = [...players];
 		const playerIndex = copyPlayers.findIndex(p => p.id === id);
 		const elementMoving = copyPlayers.splice(playerIndex, 1);
@@ -60,7 +65,7 @@ export default function useSettings() {
 		setPlayers(copyPlayers);
 	};
 
-	const movePlayerUp = (id: number) => {
+	const movePlayerUp = (id: Player['id']) => {
 		const copyPlayers = [...players];
 		const playerIndex = copyPlayers.findIndex(p => p.id === id);
 		const elementMoving = copyPlayers.splice(playerIndex, 1);
@@ -84,4 +89,3 @@ export default function useSettings() {
 		resetPlayers,
 	};
 }
-

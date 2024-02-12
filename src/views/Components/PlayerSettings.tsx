@@ -1,10 +1,11 @@
 import Button from '../../elements/Button';
 import arrowButton from '../../assets/svg-icons/arrow.svg';
+import useSettings from '../use-settings';
 
-function Settings(props) {
+function Settings(props: Omit<ReturnType<typeof useSettings>, 'resetPlayers'>) {
 	const {
 		players,
-		renamePlayer,
+		changePlayerName,
 		addPlayer,
 		canAddPlayer,
 		removePlayer,
@@ -31,7 +32,7 @@ function Settings(props) {
 								>
 									<div className='icon--minus'></div>
 								</Button>
-								<input type="text" placeholder={`Player ${player.id + 1}`} onChange={(e) => renamePlayer(e, player.id)} value={player.name} />
+								<input type="text" placeholder={`Player ${player.id + 1}`} onChange={(e) => changePlayerName(e, player.id)} value={player.name} />
 								<div className='settings-players-order-buttons'>
 									<div className='settings-players-order'>
 										{!isThisTheLastPlayer(player.id) && <Button size='mini' onClick={() => movePlayerDown(player.id)}>{<img src={arrowButton} className='down-arrow' />}</Button>}

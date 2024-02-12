@@ -21,7 +21,7 @@ function Settings() {
 		<div className="flex-column">
 			<PlayersList
 				players={players}
-				renamePlayer={changePlayerName}
+				changePlayerName={changePlayerName}
 				addPlayer={addPlayer}
 				canAddPlayer={canAddPlayer}
 				removePlayer={removePlayer}

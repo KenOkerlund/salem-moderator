@@ -1,6 +1,6 @@
 import Button from '../../elements/Button';
 
-function ResetSettings(props) {
+function ResetSettings(props: {onReset: () => void}) {
 	const { onReset } = props;
 	return (
 		<div>
