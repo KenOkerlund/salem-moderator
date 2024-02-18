@@ -1,5 +1,5 @@
 import { render, fireEvent } from '@testing-library/react';
-import { Random } from "./example-react";
+import { Random } from './example-react';
 
 describe('<Random /> component', () => {
 	test('should render the text in the button', () => {
