@@ -14,7 +14,7 @@ function Settings(props: Omit<ReturnType<typeof useSettings>, 'resetPlayers'>) {
 		movePlayerUp,
 	} = props;
 
-	const isThisTheFirstPlayer = (i: number) => i === players[0].id ? true : false;
+	const isThisTheFirstPlayer = (i: number) => i === players[0].id;
 	const isThisTheLastPlayer = (i: number) => i === players[players.length - 1].id;
 
 	return (

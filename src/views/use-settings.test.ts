@@ -10,7 +10,7 @@ describe('Use settings hook', () => {
 	describe('useSettings()', () => {
 		it('should never have less than 4 players', () => {
 			// Arrange
-			const {players, removePlayer} = useSettings();
+			const { players, removePlayer } = useSettings();
 			const player1 = players[0];
 
 			// Act

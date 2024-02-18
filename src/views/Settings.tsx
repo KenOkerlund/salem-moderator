@@ -14,7 +14,7 @@ function Settings() {
 		canRemovePlayer,
 		movePlayerDown,
 		movePlayerUp,
-		resetPlayers
+		resetPlayers,
 	} = useSettings();
 
 	// console.log(players);
