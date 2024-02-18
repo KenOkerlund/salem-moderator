@@ -1,3 +1,4 @@
+import LineBreak from '../elements/LineBreak';
 import PlayersList from './Components/PlayerSettings';
 import ResetSettings from './Components/ResetSettings';
 import useSettings from './use-settings';
@@ -16,9 +17,9 @@ function Settings() {
 		resetPlayers
 	} = useSettings();
 
-	console.log(players);
+	// console.log(players);
 	return (
-		<div className="flex-column">
+		<div className="settings-page">
 			<PlayersList
 				players={players}
 				changePlayerName={changePlayerName}
@@ -29,6 +30,7 @@ function Settings() {
 				movePlayerDown={movePlayerDown}
 				movePlayerUp={movePlayerUp}
 			/>
+			<LineBreak />
 			<ResetSettings onReset={resetPlayers} />
 		</div>
 	);
