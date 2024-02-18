@@ -2,6 +2,7 @@
     margin: 0;
     border: 0;
     box-sizing: border-box;
+    color: #F1ECCB;
 }
 
 html,
@@ -45,20 +46,29 @@ main {
     max-width: 368px;
 }
 
+.settings-page {
+    width: 100%;
+    padding: 40px 20px 0px 40px;
+}
+
 .settings-players {
     display: flex;
     flex-direction: column;
     width: 100%;
     gap: 13px;
-    padding: 40px;
 }
 
-.settings-players h6 {
-    font-size: 40px;
+h6 {
+    font-size: 30px;
     color: #F1ECCB;
-    line-height: 50.74px;
+    /* line-height: 50.74px; */
     font-weight: 400;
     letter-spacing: 8px;
+}
+
+p {
+    font-family: "Frank Ruhl Libre", serif;
+    font-size: 18px;
 }
 
 .settings-player-list {
@@ -139,4 +149,10 @@ input {
 
 .up-arrow {
     transform: rotate(180deg);
+}
+
+.settings-reset {
+    display: flex;
+    flex-direction: column;
+    gap: 21px;
 }
