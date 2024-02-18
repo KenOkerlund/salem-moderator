@@ -3,10 +3,10 @@ import Button from '../../elements/Button';
 function ResetSettings(props: {onReset: () => void}) {
 	const { onReset } = props;
 	return (
-		<div>
+		<div className='settings-reset'>
 			<h6>RESET SETTINGS</h6>
 			<p>Clears and resets all setttings.</p>
-			<Button onClick={() => onReset()}>RESET</Button>
+			<Button size='small' onClick={() => onReset()}>RESET</Button>
 		</div>
 	);
 }
