@@ -15,7 +15,7 @@ function Home() {
 			<img src={ModeratorLogo} alt="Salem Moderator logo" className='logo' />
 			<img src={highlightedPerson} alt="Lady" className='salem-lady' />
 			<Button size="large" onClick={handleBeginClick}>BEGIN</Button>
-			<Button variation="secondary" size="small">SYNC DEVICE</Button>
+			<Button variation="secondary" >SYNC DEVICE</Button>
 		</div>
 	);
 }
