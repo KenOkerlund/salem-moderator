@@ -28,7 +28,7 @@ module.exports = {
 		],
 		indent: ['error', 'tab'],
 		quotes: ['error', 'single'],
-		'linebreak-style': ['error', 'unix'],
+		'linebreak-style': 2,
 		semi: ['error', 'always'],
 		"comma-dangle": [
 			'error',
