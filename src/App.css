@@ -58,12 +58,25 @@ main {
     gap: 13px;
 }
 
+h2 {
+    font-size: 40px;
+    font-weight: 400;
+    font-family: "IM Fell English SC", serif;
+    letter-spacing: 3px;
+}
+
+h5 {
+    font-weight: 900;
+    font-size: 18px;
+}
+
 h6 {
     font-size: 30px;
     color: #F1ECCB;
     /* line-height: 50.74px; */
     font-weight: 400;
     letter-spacing: 8px;
+    font-family: "IM Fell English SC", serif;
 }
 
 p {
@@ -155,4 +168,11 @@ input {
     display: flex;
     flex-direction: column;
     gap: 21px;
+}
+
+.multi-sync {
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
