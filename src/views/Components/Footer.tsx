@@ -11,10 +11,10 @@ function Footer() {
 		navigate('/');
 	}
 	
-	return <div className="footer">
+	return <footer>
 		<Button size='large' onClick={handlePlayClick}>PLAY</Button>
 		<Button variation='secondary' size='small' onClick={handleQuitClick}>QUIT</Button>
-	</div>;
+	</footer>;
 }
 
 export default Footer;

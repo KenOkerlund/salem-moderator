@@ -19,17 +19,12 @@ body {
     flex-direction: column;
 }
 
-main {
-    /* flex: 1; */
-}
-
 .home {
     background-image: url('./assets/images/cat-eyesl.png');
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
     width: 100%;
-    /* max-width: 1055px; */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -61,10 +56,13 @@ main {
     padding: 40px 20px 0px 40px;
 }
 
+h1, h2, h3, h4, h5, h6 {
+    font-family: "IM Fell English SC", serif;
+}
+
 h2 {
     font-size: 40px;
     font-weight: 400;
-    font-family: "IM Fell English SC", serif;
     letter-spacing: 3px;
 }
 
@@ -76,10 +74,8 @@ h5 {
 h6 {
     font-size: 30px;
     color: #F1ECCB;
-    /* line-height: 50.74px; */
     font-weight: 400;
     letter-spacing: 8px;
-    font-family: "IM Fell English SC", serif;
 }
 
 p {
@@ -113,7 +109,6 @@ input {
     height: 36px;
     width: 100%;
     max-width: 349px;
-    /* min-width: 269px; */
     background-color: transparent;
     border: 1px solid #878787;
 }
@@ -182,8 +177,8 @@ input {
     padding: 0px 20px 0px 40px;
 }
 
-.footer {
-    padding: 40px 0px 40px 40px;
+footer {
+    padding: 40px 20px 40px 40px;
     border-top: 1px solid #F1ECCB;
     display: flex;
     gap: 20px;
