@@ -1,4 +1,6 @@
 import LineBreak from '../elements/LineBreak';
+import Footer from './Components/Footer';
+import MultiSync from './Components/MultiSync';
 import PlayersList from './Components/PlayerSettings';
 import ResetSettings from './Components/ResetSettings';
 import useSettings from './use-settings';
@@ -32,6 +34,9 @@ function Settings() {
 			/>
 			<LineBreak />
 			<ResetSettings onReset={resetPlayers} />
+			<LineBreak />
+			<MultiSync />
+			<Footer />
 		</div>
 	);
 }

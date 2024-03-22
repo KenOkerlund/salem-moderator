@@ -1,7 +1,6 @@
 .line-break {
-	width: 100%;
+	max-width: 100%;
 	max-width: 561px;
 	border: 1px solid #F1ECCB;
-	margin: 85px 0px 10px 0px;
-	padding-right: 100px;
+	margin: 85px 40px 10px 40px;
 }
