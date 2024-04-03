@@ -5,7 +5,7 @@ function Footer() {
 	const navigate = useNavigate();
 
 	function handlePlayClick(){
-		console.log('Clicked Play!');
+		navigate('/phase-selection');
 	}
 	function handleQuitClick(){
 		navigate('/');
