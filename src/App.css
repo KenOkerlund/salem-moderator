@@ -25,6 +25,7 @@ body {
     background-size: contain;
     background-repeat: no-repeat;
     width: 100%;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -56,7 +57,12 @@ body {
     padding: 40px 20px 0px 40px;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-family: "IM Fell English SC", serif;
 }
 
@@ -105,23 +111,20 @@ p {
     gap: 16px;
 }
 
-input {
+input[type='text'] {
     height: 36px;
     width: 100%;
     max-width: 349px;
     background-color: transparent;
     border: 1px solid #878787;
+    padding-left: 9px;
 }
 
-input,
+input[type='text'],
 input::placeholder {
     font-family: Frank Ruh Libre;
     font-size: 22px;
     color: #F1ECCB;
-}
-
-input {
-    padding-left: 9px;
 }
 
 .icon--minus,
@@ -183,4 +186,65 @@ footer {
     display: flex;
     gap: 20px;
     margin-top: 469px;
+}
+
+.phase-selection {
+    background-image: url('./assets/images/grave-robber.png');
+    background-size: contain;
+    background-position-y: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 39px;
+}
+
+.phase-card {
+    max-width: 400px;
+    min-height: 160px;
+    border: 1px solid #F1ECCB;
+    border-radius: 21px;
+    display: flex;
+    gap: 16px;
+}
+
+.phase-card h6 {
+    padding: 17px 0px 0px 16px;
+}
+
+.phase-card p {
+    padding-left: 16px;
+    font-size: 16px;
+}
+
+.night-card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.night-phase-constable {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    gap: 5px;
+    font-family: "IM Fell English SC", serif;
+    letter-spacing: 2px;
+}
+
+.night-and-constable-card {
+    border: 1px solid #F1ECCB;
+    border-radius: 21px;
+}
+
+input[type='checkbox'] {
+    width: 23px;
+    height: 23px;
+    margin-bottom: 3px;
+    accent-color: green;
+    border-radius: 2px;
 }
