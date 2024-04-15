@@ -1,12 +1,17 @@
 import Button from '../../elements/Button';
+import styles from './reset-settings.module.css';
 
 function ResetSettings(props: {onReset: () => void}) {
 	const { onReset } = props;
 	return (
-		<div className='settings-reset'>
-			<h6>RESET SETTINGS</h6>
+		<div className={styles.resetSettings}>
+			<h2>RESET SETTINGS</h2>
 			<p>Clears and resets all setttings.</p>
-			<Button size='small' onClick={() => onReset()}>RESET</Button>
+			<div className={styles.button}>
+				<Button size='small' onClick={() => onReset()}>
+					Reset Settings
+				</Button>
+			</div>
 		</div>
 	);
 }
