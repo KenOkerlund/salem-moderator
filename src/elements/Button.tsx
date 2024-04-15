@@ -1,28 +1,49 @@
 import { ReactNode } from 'react';
 import clsx from 'clsx';
-import './Button.css';
+import styles from './button.module.css';
 
 type ButtonProps = {
-    children: ReactNode;
-    variation?: 'primary' | 'secondary';
-    size?: 'large' | 'small' | 'mini';
-    custom?: boolean;
-    onClick?: () => void;
-    disabled?: boolean;
+	children: ReactNode;
+	variation?: 'primary' | 'secondary';
+	size?: 'small' | 'medium' | 'large';
+	onClick?: () => void;
+	disabled?: boolean;
+	width?: 100;
+	iconOnly?: boolean;
+	rotateContent?: boolean;
 };
 
-function Button({ children, size, variation, custom, onClick, disabled }: ButtonProps) {
-	let classes = '';
-	if (!custom) {
-		classes = clsx('button', {
-			'button--large': size === 'large',
-			'button--small': size === 'small',
-			'button--mini': size === 'mini',
-			'button--borderless': variation === 'secondary',
-		});
-	}
+function Button(props: ButtonProps) {
+	const {
+		children,
+		size = 'medium',
+		variation,
+		onClick,
+		disabled,
+		width,
+		iconOnly = false,
+		rotateContent,
+	} = props;
+
+
+	const classes = clsx(styles.button, {
+		[styles.small]: size === 'small',
+		[styles.medium]: size === 'medium',
+		[styles.large]: size === 'large',
+		[styles.secondary]: variation === 'secondary',
+		[styles.fullWidth]: width === 100,
+		[styles.iconOnly]: iconOnly,
+		[styles.disabled]: disabled,
+		[styles.rotateContent]: rotateContent,
+	});
+
 	return (
-		<button className={classes} onClick={onClick} disabled={disabled}>{children}</button>
+		<button
+			className={classes}
+			onClick={onClick}
+			disabled={disabled}>
+			{children}
+		</button>
 	);
 }
 
