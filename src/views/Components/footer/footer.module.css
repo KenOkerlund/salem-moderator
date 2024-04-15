@@ -1,0 +1,18 @@
+.footer {
+	border-top: 1px solid #F1ECCB;
+	padding: 24px 0;
+	display: flex;
+	gap: 16px;
+	justify-content: center;
+}
+
+/**
+ * Settings has a max width of 500
+ * but have to account for the padding of 32 + 32
+ * + 1 because that is when it should change
+ */
+@media screen and (min-width: 565px) {
+	.footer.autoLeft {
+		justify-content: flex-start;
+	}
+}
