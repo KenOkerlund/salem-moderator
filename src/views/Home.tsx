@@ -1,21 +1,34 @@
 import { useNavigate } from 'react-router-dom';
+import Button from '../elements/Button';
+
 import highlightedPerson from '../assets/images/highlighted-person.png';
 import ModeratorLogo from '../assets/images/moderator-logo.svg';
-import Button from '../elements/Button';
+
+import styles from './Home.module.css';
 
 function Home() {
 	const navigate = useNavigate();
 
-	function handleBeginClick() {
-		navigate('/settings/');
-	}
-
 	return (
-		<div className='home'>
-			<img src={ModeratorLogo} alt="Salem Moderator logo" className='logo' />
-			<img src={highlightedPerson} alt="Lady" className='salem-lady' />
-			<Button size="large" onClick={handleBeginClick}>BEGIN</Button>
-			<Button variation="secondary" >SYNC DEVICE</Button>
+		<div className={styles.home}>
+			<div className={styles.container}>
+				<img
+					src={ModeratorLogo}
+					alt="Salem Moderator logo"
+					className={styles.logo}
+				/>
+
+				<img
+					src={highlightedPerson}
+					alt="Lady"
+					className={styles.person}
+				/>
+				
+				<Button width={100} size="large" onClick={() => navigate('/settings/')}>
+					BEGIN
+				</Button>
+				{/* <Button variation='secondary'>SYNC DEVICE</Button> */}
+			</div>
 		</div>
 	);
 }

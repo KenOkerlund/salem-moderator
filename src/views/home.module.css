@@ -1,0 +1,25 @@
+.home {
+	flex: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 50px;
+}
+
+.container {
+	max-width: 400px;
+	display: flex;
+	align-items: center;
+	gap: 24px;
+	flex-direction: column;
+}
+
+.logo {
+	width: 100%;
+	max-width: 376px;
+}
+
+.person {
+	width: 100%;
+	max-width: 368px;
+}

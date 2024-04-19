@@ -1,0 +1,28 @@
+.iconMinus,
+.iconPlus {
+    width: 32px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.iconMinus:before,
+.iconPlus:before,
+.iconPlus:after {
+    content: "";
+    width: 18px;
+    height: 6px;
+    background-color: #D9D9D9;
+    border-radius: 1px;
+    flex-shrink: 0;
+}
+
+.iconPlus:before {
+    transform: translateX(9px);
+}
+
+.iconPlus:after {
+    transform: rotate(90deg) translateY(9px);
+}
