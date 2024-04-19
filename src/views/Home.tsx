@@ -5,7 +5,6 @@ import highlightedPerson from '../assets/images/highlighted-person.png';
 import ModeratorLogo from '../assets/images/moderator-logo.svg';
 
 import styles from './Home.module.css';
-import { IconPlus } from '../assets/html-css-icons/icon-plus';
 
 function Home() {
 	const navigate = useNavigate();
