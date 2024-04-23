@@ -64,6 +64,7 @@ body,
 }
 
 body {
+	font-family: Frank Ruhl Libre;
     background-color: #3A3A3A;
     background-image: url('./assets/images/background-texture.png');
     background-size: cover;
