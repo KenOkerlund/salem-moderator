@@ -22,7 +22,7 @@ export function Phase(props: phaseProps) {
 				<div>{props.children}</div>
 			</div>
 		</div>
-			<Footer primaryButtonText='Abort' onPrimaryClick={abortButtonClick} secondaryButtonText={props.secondaryButton ? 'Next' : undefined} onSecondaryClick={props.secondaryButtonClick} />
-			</>
+		<Footer primaryButtonText='Abort' onPrimaryClick={abortButtonClick} secondaryButtonText={props.secondaryButton ? 'Next' : undefined} onSecondaryClick={props.secondaryButtonClick} />
+	</>
 	);
 }

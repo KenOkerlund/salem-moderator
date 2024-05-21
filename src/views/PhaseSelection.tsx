@@ -23,17 +23,17 @@ function PhaseSelection() {
 				confession: false,
 				deathReveal: false,
 			},
-		}
-	};
+		};
+	}
 	const [phase, setPhase] = useState(createState());
 	const [isConstableChecked, setIsConstableChecked] = useState(true);
 
 	function updatePhase(stage: string) {
-		let tempState = createState();
+		const tempState = createState();
 		tempState.phaseSelection = false;
 		set(tempState, stage, true);
 		setPhase(tempState);
-	};
+	}
 
 	return (
 		<>
