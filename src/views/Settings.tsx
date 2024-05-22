@@ -41,7 +41,7 @@ function Settings() {
 			</div>
 			<Footer
 				autoLeft
-				onPrimaryClick={() => navigate('/select-phase')}
+				onPrimaryClick={() => navigate('/selection')}
 				primaryButtonText='Play'
 				onSecondaryClick={() => navigate('/')}
 				secondaryButtonText='Quit'

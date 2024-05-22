@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { set } from 'lodash';
+import { useSelection } from './use-selection';
 import Button from '../elements/Button';
 import arrowButton from '../assets/svg-icons/arrow.svg';
 import SettingsButton from '../elements/SettingsButton';
@@ -7,44 +7,19 @@ import styles from './phase-selection.module.css';
 import { Phase } from './Components/Phase';
 
 function PhaseSelection() {
-	function createState() {
-		return {
-			phaseSelection: true,
-			dawn: {
-				blackCatInstructions: false,
-				blackCatAssignment: false,
-				blackCatReveal: false,
-			},
-			night: {
-				nightInstructions: false,
-				deathAssignment: false,
-				constableSave: false,
-				constableReveal: false,
-				confession: false,
-				deathReveal: false,
-			},
-		};
-	}
-	const [phase, setPhase] = useState(createState());
+	const { phase, setPhase, stage, instructionalText } = useSelection();
 	const [isConstableChecked, setIsConstableChecked] = useState(true);
-
-	function updatePhase(stage: string) {
-		const tempState = createState();
-		tempState.phaseSelection = false;
-		set(tempState, stage, true);
-		setPhase(tempState);
-	}
 
 	return (
 		<>
-			{phase.phaseSelection && <div className={styles.phasePage}>
+			{!phase && <div className={styles.phasePage}>
 				<SettingsButton />
-
+				<h1>{phase}</h1>
 				<div className={styles.phaseType + ' ' + styles.dawnPhase}>
 					<h1 className={styles.header}>Dawn</h1>
 					<p>The witches select a player to receive the black cat.</p>
 					<div>
-						<Button size='small' onClick={() => updatePhase('dawn.blackCatInstructions')}>
+						<Button size='small' onClick={() => setPhase('dawn')} >
 							Begin
 							<img src={arrowButton} className={styles.arrowIcon} />
 						</Button>
@@ -58,7 +33,7 @@ function PhaseSelection() {
 					<p>The witches select a player they wish to kill.</p>
 					<p>The constable selects a player to attempt to save.</p>
 					<div>
-						<Button size='small' onClick={() => updatePhase('night.nightInstructions')}>
+						<Button size='small' onClick={() => setPhase('night')}>
 							Begin
 							<img src={arrowButton} className={styles.arrowIcon} />
 						</Button>
@@ -68,9 +43,18 @@ function PhaseSelection() {
 						<label htmlFor="constable">Constable</label>
 					</div>
 				</div>
-			</div>}
+			</div>} 
+			{phase && (
+				<div>
+					{stage === 'player-selection' && 
+					<div>
+						<div>{instructionalText}</div>
+						<div></div>
+					</div> }
+				</div>
+			)}
 
-			{phase.dawn.blackCatInstructions && <Phase phaseType='Dawn' secondaryButton secondaryButtonClick={() => updatePhase('dawn.blackCatAssignment')}>Audio instructions</Phase>}
+			{/* {phase.dawn.blackCatInstructions && <Phase phaseType='Dawn' secondaryButton secondaryButtonClick={() => updatePhase('dawn.blackCatAssignment')}>Audio instructions</Phase>}
 			{phase.dawn.blackCatAssignment && <Phase phaseType='Dawn' secondaryButton secondaryButtonClick={() => updatePhase('dawn.blackCatReveal')}>Text instructions and cards to confirm selection</Phase>}
 			{phase.dawn.blackCatReveal && <Phase phaseType='Dawn' secondaryButton secondaryButtonClick={() => updatePhase('phaseSelection')}>Text prompt and card to reveal</Phase>}
 
@@ -79,7 +63,7 @@ function PhaseSelection() {
 			{phase.night.constableSave && <Phase phaseType='Night' secondaryButton secondaryButtonClick={() => updatePhase('night.constableReveal')}>Text instructions and cards for constable to attempt save</Phase>}
 			{phase.night.constableReveal && <Phase phaseType='Night' secondaryButton secondaryButtonClick={() => updatePhase('night.confession')}>Text guide and card for revealing who the constable tried to save</Phase>}
 			{phase.night.confession && <Phase phaseType='Night' secondaryButton secondaryButtonClick={() => updatePhase('night.deathReveal')}>Text guide for people to decide to confess</Phase>}
-			{phase.night.deathReveal && <Phase phaseType='Night' secondaryButton secondaryButtonClick={() => updatePhase('phaseSelection')}>Text guide with card to reveal the potentially dead player</Phase>}
+			{phase.night.deathReveal && <Phase phaseType='Night' secondaryButton secondaryButtonClick={() => updatePhase('phaseSelection')}>Text guide with card to reveal the potentially dead player</Phase>} */}
 		</>
 	);
 }

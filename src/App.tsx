@@ -11,7 +11,7 @@ function App() {
 				<Routes>
 					<Route index element={<Home />} />
 					<Route path="/settings" element={<Settings />} />
-					<Route path='/select-phase' element={<PhaseSelection />} />
+					<Route path='/selection' element={<PhaseSelection />} />
 				</Routes>
 			</BrowserRouter>
 		</main>
