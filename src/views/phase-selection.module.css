@@ -54,7 +54,13 @@
 	font-family: IM FELL English SC;
 	font-size: 18px;
 	letter-spacing: 2px;
-    color: #F1ECCB;
+	color: #F1ECCB;
 	accent-color: #3C7429;
 	text-transform: lowercase;
+}
+
+.selectionPage {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
 }

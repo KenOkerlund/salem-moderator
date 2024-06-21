@@ -1,4 +1,6 @@
 import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { PlayersContext } from '../players-context';
 import { Footer } from './Components/footer/footer';
 import PlayersList from './Components/PlayerSettings';
 import ResetSettings from './Components/ResetSettings';
@@ -8,8 +10,8 @@ import styles from './settings.module.css';
 
 function Settings() {
 	const navigate = useNavigate();
+	const { players, setPlayers, resetPlayers } = useContext(PlayersContext);
 	const {
-		players,
 		changePlayerName,
 		addPlayer,
 		canAddPlayer,
@@ -17,8 +19,7 @@ function Settings() {
 		canRemovePlayer,
 		movePlayerDown,
 		movePlayerUp,
-		resetPlayers,
-	} = useSettings();
+	} = useSettings(players, setPlayers);
 
 	// console.log(players);
 	return (
@@ -41,7 +42,7 @@ function Settings() {
 			</div>
 			<Footer
 				autoLeft
-				onPrimaryClick={() => navigate('/select-phase')}
+				onPrimaryClick={() => navigate('/selection')}
 				primaryButtonText='Play'
 				onSecondaryClick={() => navigate('/')}
 				secondaryButtonText='Quit'

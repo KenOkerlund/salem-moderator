@@ -5,6 +5,7 @@ import styles from './player-settings.module.css';
 import { TextInput } from '../../elements/input/text-input';
 import { IconMinus } from '../../assets/html-css-icons/icon-minus';
 import { IconPlus } from '../../assets/html-css-icons/icon-plus';
+import { formatPlayerName } from '../../utils/format-player-name';
 
 function Settings(props: Omit<ReturnType<typeof useSettings>, 'resetPlayers'>) {
 	const {
@@ -38,7 +39,7 @@ function Settings(props: Omit<ReturnType<typeof useSettings>, 'resetPlayers'>) {
 									<IconMinus />
 								</Button>
 								<TextInput
-									placeholder={`Player ${player.id + 1}`}
+									placeholder={formatPlayerName(player)}
 									onChange={(e) => changePlayerName(e, player.id)} value={player.name}
 								/>
 								<Button
