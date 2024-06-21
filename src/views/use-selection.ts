@@ -13,12 +13,14 @@ export function useSelection(){
 	const [playersHaveConfessed, setPlayersHaveConfessed] = useState(false);
 
 	let instructionalText = '';
+	let audience = 'Witches';
 	if (phase === 'dawn'){
 		if(!witchesSelection){
 			instructionalText = 'Select a player to receive the Black Cat. You may select yourself.';
 		}
 		else {
 			instructionalText = 'Reveal the player who was given the Black Cat.';
+			audience = 'Players';
 		}
 	}
 
@@ -39,11 +41,20 @@ export function useSelection(){
 			instructionalText = 'Reveal the player who was attacked by the Witches.';
 		}
 	}
+
+	// let actingPlayer = 
+	const setWitchSelection = (player: Player) => {
+		setWitchesSelection(player);
+		setStage('reveal');		
+	};
 	
 	return {
 		phase,
 		setPhase,
 		stage,
 		instructionalText,
+		witchesSelection,
+		setWitchSelection,
+		audience,
 	};
 }

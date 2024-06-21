@@ -1,19 +1,32 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useSelection } from './use-selection';
 import Button from '../elements/Button';
 import arrowButton from '../assets/svg-icons/arrow.svg';
-import SettingsButton from '../elements/SettingsButton';
+// import SettingsButton from '../elements/SettingsButton';
 import styles from './phase-selection.module.css';
-import { Phase } from './Components/Phase';
+import { PlayersContext } from '../players-context';
+import { Footer } from './Components/footer/footer';
+import { formatPlayerName } from '../utils/format-player-name';
+// import { Phase } from './Components/Phase';
+
 
 function PhaseSelection() {
-	const { phase, setPhase, stage, instructionalText } = useSelection();
+	const { players } = useContext(PlayersContext);
+	const {
+		phase, 
+		setPhase, 
+		stage, 
+		instructionalText, 
+		witchesSelection, 
+		setWitchSelection, 
+		audience,
+	} = useSelection();
 	const [isConstableChecked, setIsConstableChecked] = useState(true);
 
 	return (
 		<>
 			{!phase && <div className={styles.phasePage}>
-				<SettingsButton />
+				{/* <SettingsButton /> */}
 				<h1>{phase}</h1>
 				<div className={styles.phaseType + ' ' + styles.dawnPhase}>
 					<h1 className={styles.header}>Dawn</h1>
@@ -45,25 +58,40 @@ function PhaseSelection() {
 				</div>
 			</div>} 
 			{phase && (
-				<div>
-					{stage === 'player-selection' && 
-					<div>
+				<>
+					<div className={styles.selectionPage}>
+						<h1>Phase: {phase === 'dawn' ? 'Dawn' : 'Night'}</h1>
+						<h4>Audience: {audience}</h4>
 						<div>{instructionalText}</div>
-						<div></div>
-					</div> }
-				</div>
+						{stage === 'player-selection' && (
+							<div>
+								{players.map((player) => {
+									return (
+										<button 
+											key={player.id} 
+											onClick={() => setWitchSelection(player)}
+										>
+											{formatPlayerName(player)}
+										</button>
+									);
+								})}
+							</div> 
+						)}
+						{stage === 'reveal' && witchesSelection && (
+							<div>
+								{formatPlayerName(witchesSelection)}
+							</div>
+						)}
+						
+					</div>
+					<Footer 
+						primaryButtonText='Abort'
+						onPrimaryClick={() => console.log('abort button')}
+						secondaryButtonText='Next'
+						onSecondaryClick={() => console.log('next button')}
+					/>
+				</>
 			)}
-
-			{/* {phase.dawn.blackCatInstructions && <Phase phaseType='Dawn' secondaryButton secondaryButtonClick={() => updatePhase('dawn.blackCatAssignment')}>Audio instructions</Phase>}
-			{phase.dawn.blackCatAssignment && <Phase phaseType='Dawn' secondaryButton secondaryButtonClick={() => updatePhase('dawn.blackCatReveal')}>Text instructions and cards to confirm selection</Phase>}
-			{phase.dawn.blackCatReveal && <Phase phaseType='Dawn' secondaryButton secondaryButtonClick={() => updatePhase('phaseSelection')}>Text prompt and card to reveal</Phase>}
-
-			{phase.night.nightInstructions && <Phase phaseType='Night' secondaryButton secondaryButtonClick={() => updatePhase('night.deathAssignment')}>Instructions with sound</Phase>}
-			{phase.night.deathAssignment && <Phase phaseType='Night' secondaryButton secondaryButtonClick={isConstableChecked ? () => updatePhase('night.constableSave') : () => updatePhase('night.confession')}>Text instructions and cards to select player</Phase>}
-			{phase.night.constableSave && <Phase phaseType='Night' secondaryButton secondaryButtonClick={() => updatePhase('night.constableReveal')}>Text instructions and cards for constable to attempt save</Phase>}
-			{phase.night.constableReveal && <Phase phaseType='Night' secondaryButton secondaryButtonClick={() => updatePhase('night.confession')}>Text guide and card for revealing who the constable tried to save</Phase>}
-			{phase.night.confession && <Phase phaseType='Night' secondaryButton secondaryButtonClick={() => updatePhase('night.deathReveal')}>Text guide for people to decide to confess</Phase>}
-			{phase.night.deathReveal && <Phase phaseType='Night' secondaryButton secondaryButtonClick={() => updatePhase('phaseSelection')}>Text guide with card to reveal the potentially dead player</Phase>} */}
 		</>
 	);
 }
