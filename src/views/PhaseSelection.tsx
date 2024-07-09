@@ -20,8 +20,16 @@ function PhaseSelection() {
 		witchesSelection, 
 		setWitchSelection, 
 		audience,
+		constableSelection,
+		setTheConstableSelection,
+		isConstableChecked,
+		handleChangeConstableChecked,
+		// constableSelectionRevealed,
+		// handleConstableSelectionRevealClick,
 	} = useSelection();
-	const [isConstableChecked, setIsConstableChecked] = useState(true);
+	// const [isConstableChecked, setIsConstableChecked] = useState(true);
+	const [shouldRevealWitchSelection, setShouldRevealWitchSelection] = useState(false);
+	const [shouldRevealConstableSelection, setShouldRevealConstableSelection] = useState(false);
 
 	return (
 		<>
@@ -52,7 +60,7 @@ function PhaseSelection() {
 						</Button>
 					</div>
 					<div className={styles.constable}>
-						<input type="checkbox" id='constable' value="constable" name='constable' checked={isConstableChecked} onChange={() => setIsConstableChecked(!isConstableChecked)} />
+						<input type="checkbox" id='constable' value="constable" name='constable' checked={isConstableChecked} onChange={handleChangeConstableChecked} />
 						<label htmlFor="constable">Constable</label>
 					</div>
 				</div>
@@ -69,7 +77,7 @@ function PhaseSelection() {
 									return (
 										<button 
 											key={player.id} 
-											onClick={() => setWitchSelection(player)}
+											onClick={() => !witchesSelection ? setWitchSelection(player) : setTheConstableSelection(player)}
 										>
 											{formatPlayerName(player)}
 										</button>
@@ -77,12 +85,17 @@ function PhaseSelection() {
 								})}
 							</div> 
 						)}
-						{stage === 'reveal' && witchesSelection && (
+						{stage === 'reveal' && witchesSelection && !constableSelection && (
 							<div>
-								{formatPlayerName(witchesSelection)}
+								<button onClick={() => setShouldRevealWitchSelection(true)}>{!shouldRevealWitchSelection ? 'Reveal' : formatPlayerName(witchesSelection)}</button>
 							</div>
 						)}
-						
+
+						{phase === 'night' && stage === 'reveal' && witchesSelection && isConstableChecked && constableSelection && (
+							<div>
+								<button onClick={() => setShouldRevealConstableSelection(true)}>{!shouldRevealConstableSelection ? 'Reveal' : formatPlayerName(constableSelection)}</button>
+							</div>
+						)}
 					</div>
 					<Footer 
 						primaryButtonText='Abort'
