@@ -18,18 +18,22 @@ function PhaseSelection() {
 		stage, 
 		instructionalText, 
 		witchesSelection, 
-		setWitchSelection, 
+		setWitchSelection,
+		revealWitchSelection,
+		witchesSelectionRevealed,
 		audience,
 		constableSelection,
 		setTheConstableSelection,
+		revealConstableSelection,
+		constableSelectionRevealed,
 		isConstableChecked,
 		handleChangeConstableChecked,
+		isNextButtonVisible,
+		nextButtonAction,
 		// constableSelectionRevealed,
 		// handleConstableSelectionRevealClick,
 	} = useSelection();
 	// const [isConstableChecked, setIsConstableChecked] = useState(true);
-	const [shouldRevealWitchSelection, setShouldRevealWitchSelection] = useState(false);
-	const [shouldRevealConstableSelection, setShouldRevealConstableSelection] = useState(false);
 
 	return (
 		<>
@@ -77,6 +81,7 @@ function PhaseSelection() {
 									return (
 										<button 
 											key={player.id} 
+											// can make the "which selection is this" logic in the hook. Then can do the same technique in the below checks as well. Just export the function and let the hook determine what it is doing.
 											onClick={() => !witchesSelection ? setWitchSelection(player) : setTheConstableSelection(player)}
 										>
 											{formatPlayerName(player)}
@@ -87,21 +92,21 @@ function PhaseSelection() {
 						)}
 						{stage === 'reveal' && witchesSelection && !constableSelection && (
 							<div>
-								<button onClick={() => setShouldRevealWitchSelection(true)}>{!shouldRevealWitchSelection ? 'Reveal' : formatPlayerName(witchesSelection)}</button>
+								<button onClick={revealWitchSelection}>{!witchesSelectionRevealed ? 'Reveal' : formatPlayerName(witchesSelection)}</button>
 							</div>
 						)}
 
 						{phase === 'night' && stage === 'reveal' && witchesSelection && isConstableChecked && constableSelection && (
 							<div>
-								<button onClick={() => setShouldRevealConstableSelection(true)}>{!shouldRevealConstableSelection ? 'Reveal' : formatPlayerName(constableSelection)}</button>
+								<button onClick={revealConstableSelection}>{!constableSelectionRevealed ? 'Reveal' : formatPlayerName(constableSelection)}</button>
 							</div>
 						)}
 					</div>
 					<Footer 
 						primaryButtonText='Abort'
 						onPrimaryClick={() => console.log('abort button')}
-						secondaryButtonText='Next'
-						onSecondaryClick={() => console.log('next button')}
+						secondaryButtonText={isNextButtonVisible ? 'Next' : undefined}
+						onSecondaryClick={nextButtonAction}
 					/>
 				</>
 			)}

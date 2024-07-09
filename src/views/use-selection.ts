@@ -49,6 +49,10 @@ export function useSelection(){
 		}
 	}
 
+	const isNextButtonVisible = stage === 'confession' || stage === 'reveal';
+	
+
+
 	// let actingPlayer = 
 	const setWitchSelection = (player: Player) => {
 		setWitchesSelection(player);
@@ -59,13 +63,22 @@ export function useSelection(){
 			setStage('player-selection');
 		}
 	};
+
+	const revealWitchSelection = () => {
+		setWitchesSelectionRevealed(true);
+	};
+
 	const setTheConstableSelection = (player: Player) => {
 		setConstableSelection(player);
 		setStage('reveal');
 	};
 
+	const revealConstableSelection = () => {
+		setConstableSelectionRevealed(true);
+	};
+
 	const handleChangeConstableChecked = () => {
-		setIsConstableChecked(!isConstableChecked);
+		setIsConstableChecked(prevState => !prevState);
 	};
 
 	// const handleConstableSelectionRevealClick = () => {
@@ -79,11 +92,16 @@ export function useSelection(){
 		instructionalText,
 		witchesSelection,
 		setWitchSelection,
+		revealWitchSelection,
+		witchesSelectionRevealed,
 		audience,
 		constableSelection,
 		setTheConstableSelection,
+		revealConstableSelection,
+		constableSelectionRevealed,
 		isConstableChecked,
 		handleChangeConstableChecked,
+		isNextButtonVisible,
 		// constableSelectionRevealed,
 		// handleConstableSelectionRevealClick,
 	};
