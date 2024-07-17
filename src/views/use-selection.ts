@@ -3,106 +3,129 @@ import { Player } from '../types';
 
 type Stage = 'player-selection' | 'confession' | 'reveal';
 
-export function useSelection(){
+type Step = {
+	instructionalText: string;
+	audience: 'Witches' | 'Players' | 'Constable';
+	setPlayer: (player: Player) => void;
+	stage: Stage;
+	playerToReveal: null | undefined | Player;
+	next: null | (() => void);
+}
+
+export function useSelection() {
 	const [phase, setPhase] = useState<'dawn' | 'night'>();
-	const [stage, setStage] = useState<Stage>('player-selection');
+	const [step, setStep] = useState<number>(0);
+
 	const [witchesSelection, setWitchesSelection] = useState<Player>();
 	const [constableSelection, setConstableSelection] = useState<Player>();
 	const [isConstableChecked, setIsConstableChecked] = useState(true);
-	const [witchesSelectionRevealed, setWitchesSelectionRevealed] = useState(false);
-	const [constableSelectionRevealed, setConstableSelectionRevealed] = useState(false);
-	const [playersHaveConfessed, setPlayersHaveConfessed] = useState(false);
+	const [shouldReveal, setShouldReveal] = useState(false);
 
-	let instructionalText = '';
-	let audience = 'Witches';
-	if (phase === 'dawn'){
-		if(!witchesSelection){
-			instructionalText = 'Select a player to receive the Black Cat. You may select yourself.';
-			audience = 'Witches';
-		}
-		else {
-			instructionalText = 'Reveal the player who was given the Black Cat.';
-			audience = 'Players';
-		}
-	}
-
-	if (phase === 'night'){
-		if(!witchesSelection){
-			instructionalText = 'Select a player to kill. You may select yourself.';
-			audience = 'Witches';
-		}
-		else if(!constableSelection && isConstableChecked){
-			instructionalText = 'Select a player to protect. You may NOT select yourself.';
-			audience = 'Constable';
-		}
-		else if(!constableSelectionRevealed && isConstableChecked){
-			instructionalText = 'Reveal the player who was protected by the Constable.';
-			audience = 'Players';
-		}
-		else if(constableSelectionRevealed){
-			instructionalText = 'Decide if you want to confess.';
-			audience = 'Players';
-		}
-		else if(!witchesSelectionRevealed){
-			instructionalText = 'Reveal the player who was attacked by the Witches.';
-			audience = 'Players';
-		}
-	}
-
-	const isNextButtonVisible = stage === 'confession' || stage === 'reveal';
-	
-
-
-	// let actingPlayer = 
-	const setWitchSelection = (player: Player) => {
-		setWitchesSelection(player);
-		if(phase === 'dawn' || !isConstableChecked){
-			setStage('reveal');		
-		}
-		else {
-			setStage('player-selection');
-		}
+	const reset = () => {
+		setPhase(undefined);
+		setStep(0);
+		setWitchesSelection(undefined);
+		setConstableSelection(undefined);
+		setShouldReveal(false);
 	};
 
-	const revealWitchSelection = () => {
-		setWitchesSelectionRevealed(true);
-	};
+	const nextStep = () => setStep(step + 1);
+	const skipSteps = (count: number) => setStep(step + count + 1);
 
-	const setTheConstableSelection = (player: Player) => {
-		setConstableSelection(player);
-		setStage('reveal');
-	};
+	const dawnSteps: Step[] = [
+		{
+			instructionalText: 'Select a player to receive the Black Cat. You may select yourself.',
+			audience: 'Witches',
+			setPlayer: (player: Player) => {
+				setWitchesSelection(player);
+				nextStep();
+			},
+			stage: 'player-selection',
+			playerToReveal: null,
+			next: null,
+		},
+		{
+			instructionalText: 'Reveal the player who was given the Black Cat.',
+			audience: 'Players',
+			setPlayer: () => {},
+			stage: 'reveal',
+			playerToReveal: shouldReveal ? witchesSelection : null,
+			next: shouldReveal ? () => reset() : null,
+		},
+	];
 
-	const revealConstableSelection = () => {
-		setConstableSelectionRevealed(true);
-	};
+	const nightSteps: Step[] = [
+		{
+			instructionalText: 'Select a player to kill. You may select yourself.',
+			audience: 'Witches',
+			setPlayer: (player: Player) => {
+				setWitchesSelection(player);
+				if (isConstableChecked) {
+					nextStep();
+				}
+				else {
+					skipSteps(2);
+				}
+			},
+			stage: 'player-selection',
+			playerToReveal: null,
+			next: null,
+		},
+		{
+			instructionalText: 'Select a player to protect. You may NOT select yourself.',
+			audience: 'Constable',
+			setPlayer: (player: Player) => {
+				setConstableSelection(player);
+				nextStep();
+			},
+			stage: 'player-selection',
+			playerToReveal: null,
+			next: null,
+		},
+		{
+			instructionalText: 'Reveal the player who was protected by the Constable.',
+			audience: 'Players',
+			setPlayer: () => {},
+			stage: 'reveal',
+			playerToReveal: shouldReveal ? constableSelection : null,
+			next: shouldReveal ? () => {
+				setShouldReveal(false);
+				nextStep(); 
+			} : null,
+		},
+		{
+			instructionalText: 'Decide if you want to confess.',
+			audience: 'Players',
+			setPlayer: () => {},
+			stage: 'confession',
+			playerToReveal: null,
+			next: () => {
+				nextStep();
+			},
+		},
+		{
+			instructionalText: 'Reveal the player who was attacked by the Witches.',
+			audience: 'Players',
+			setPlayer: () => {},
+			stage: 'reveal',
+			playerToReveal: shouldReveal ? witchesSelection : null,
+			next: shouldReveal ? () => reset() : null,
+		},
+	];
 
 	const handleChangeConstableChecked = () => {
 		setIsConstableChecked(prevState => !prevState);
 	};
 
-	// const handleConstableSelectionRevealClick = () => {
-	// 	setConstableSelectionRevealed(true);
-	// };
-	
+	const allowReveal = () => setShouldReveal(true);
+
 	return {
 		phase,
 		setPhase,
-		stage,
-		instructionalText,
-		witchesSelection,
-		setWitchSelection,
-		revealWitchSelection,
-		witchesSelectionRevealed,
-		audience,
-		constableSelection,
-		setTheConstableSelection,
-		revealConstableSelection,
-		constableSelectionRevealed,
 		isConstableChecked,
 		handleChangeConstableChecked,
-		isNextButtonVisible,
-		// constableSelectionRevealed,
-		// handleConstableSelectionRevealClick,
+		allowReveal,
+		reset,
+		...(phase === 'dawn' ? dawnSteps[step] : nightSteps[step]),
 	};
 }
