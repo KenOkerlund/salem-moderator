@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useContext } from 'react';
 import { useSelection } from './use-selection';
 import Button from '../elements/Button';
 import arrowButton from '../assets/svg-icons/arrow.svg';
@@ -7,33 +7,25 @@ import styles from './phase-selection.module.css';
 import { PlayersContext } from '../players-context';
 import { Footer } from './Components/footer/footer';
 import { formatPlayerName } from '../utils/format-player-name';
-// import { Phase } from './Components/Phase';
 
 
-function PhaseSelection() {
+export function PhaseSelection() {
 	const { players } = useContext(PlayersContext);
 	const {
 		phase, 
 		setPhase, 
-		stage, 
-		instructionalText, 
-		witchesSelection, 
-		setWitchSelection,
-		revealWitchSelection,
-		witchesSelectionRevealed,
-		audience,
-		constableSelection,
-		setTheConstableSelection,
-		revealConstableSelection,
-		constableSelectionRevealed,
 		isConstableChecked,
 		handleChangeConstableChecked,
-		isNextButtonVisible,
-		nextButtonAction,
-		// constableSelectionRevealed,
-		// handleConstableSelectionRevealClick,
+		instructionalText,
+		audience,
+		setPlayer,
+		stage,
+		playerToReveal,
+		allowReveal,
+		next,
+		reset,
 	} = useSelection();
-	// const [isConstableChecked, setIsConstableChecked] = useState(true);
+	
 
 	return (
 		<>
@@ -81,8 +73,7 @@ function PhaseSelection() {
 									return (
 										<button 
 											key={player.id} 
-											// can make the "which selection is this" logic in the hook. Then can do the same technique in the below checks as well. Just export the function and let the hook determine what it is doing.
-											onClick={() => !witchesSelection ? setWitchSelection(player) : setTheConstableSelection(player)}
+											onClick={() => setPlayer(player)}
 										>
 											{formatPlayerName(player)}
 										</button>
@@ -90,28 +81,20 @@ function PhaseSelection() {
 								})}
 							</div> 
 						)}
-						{stage === 'reveal' && witchesSelection && !constableSelection && (
+						{stage === 'reveal' && (
 							<div>
-								<button onClick={revealWitchSelection}>{!witchesSelectionRevealed ? 'Reveal' : formatPlayerName(witchesSelection)}</button>
-							</div>
-						)}
-
-						{phase === 'night' && stage === 'reveal' && witchesSelection && isConstableChecked && constableSelection && (
-							<div>
-								<button onClick={revealConstableSelection}>{!constableSelectionRevealed ? 'Reveal' : formatPlayerName(constableSelection)}</button>
+								<button onClick={allowReveal}>{playerToReveal ? formatPlayerName(playerToReveal) : 'Reveal'}</button>
 							</div>
 						)}
 					</div>
 					<Footer 
 						primaryButtonText='Abort'
-						onPrimaryClick={() => console.log('abort button')}
-						secondaryButtonText={isNextButtonVisible ? 'Next' : undefined}
-						onSecondaryClick={nextButtonAction}
+						onPrimaryClick={reset}
+						secondaryButtonText={next ? 'Next' : undefined}
+						onSecondaryClick={next ? next : undefined}
 					/>
 				</>
 			)}
 		</>
 	);
 }
-
-export default PhaseSelection;
