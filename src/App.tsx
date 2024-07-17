@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './views/Home';
 import Settings from './views/Settings';
-import PhaseSelection from './views/PhaseSelection';
+import { PhaseSelection } from './views/phase-selection';
 import styles from './app.module.css';
 import { PlayersContext, createPlayers } from './players-context';
 import { useState } from 'react';
