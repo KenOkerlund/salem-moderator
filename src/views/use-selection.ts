@@ -19,14 +19,14 @@ export function useSelection() {
 	const [witchesSelection, setWitchesSelection] = useState<Player>();
 	const [constableSelection, setConstableSelection] = useState<Player>();
 	const [isConstableChecked, setIsConstableChecked] = useState(true);
-	const [shouldReveal, setShouldReveal] = useState(false);
+	const [isRevealing, setIsRevealing] = useState(false);
 
 	const reset = () => {
 		setPhase(undefined);
 		setStep(0);
 		setWitchesSelection(undefined);
 		setConstableSelection(undefined);
-		setShouldReveal(false);
+		setIsRevealing(false);
 	};
 
 	const nextStep = () => setStep(step + 1);
@@ -49,8 +49,8 @@ export function useSelection() {
 			audience: 'Players',
 			setPlayer: () => {},
 			stage: 'reveal',
-			playerToReveal: shouldReveal ? witchesSelection : null,
-			next: shouldReveal ? () => reset() : null,
+			playerToReveal: isRevealing ? witchesSelection : null,
+			next: isRevealing ? () => reset() : null,
 		},
 	];
 
@@ -87,9 +87,9 @@ export function useSelection() {
 			audience: 'Players',
 			setPlayer: () => {},
 			stage: 'reveal',
-			playerToReveal: shouldReveal ? constableSelection : null,
-			next: shouldReveal ? () => {
-				setShouldReveal(false);
+			playerToReveal: isRevealing ? constableSelection : null,
+			next: isRevealing ? () => {
+				setIsRevealing(false);
 				nextStep(); 
 			} : null,
 		},
@@ -108,8 +108,8 @@ export function useSelection() {
 			audience: 'Players',
 			setPlayer: () => {},
 			stage: 'reveal',
-			playerToReveal: shouldReveal ? witchesSelection : null,
-			next: shouldReveal ? () => reset() : null,
+			playerToReveal: isRevealing ? witchesSelection : null,
+			next: isRevealing ? () => reset() : null,
 		},
 	];
 
@@ -117,7 +117,7 @@ export function useSelection() {
 		setIsConstableChecked(prevState => !prevState);
 	};
 
-	const allowReveal = () => setShouldReveal(true);
+	const allowReveal = () => setIsRevealing(true);
 
 	return {
 		phase,
