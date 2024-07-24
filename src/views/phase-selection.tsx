@@ -63,17 +63,20 @@ export function PhaseSelection() {
 			</div>} 
 			{phase && (
 				<>
-					<div className={styles.selectionPage}>
-						<h1>Phase: {phase === 'dawn' ? 'Dawn' : 'Night'}</h1>
-						<h4>Audience: {audience}</h4>
-						<div>{instructionalText}</div>
+					<div className={`${phase === 'dawn' ? styles.dawnBackground : styles.nightBackground} ${styles.selectionPage}`}>
+						<h2 className={styles.phaseTitle}>{phase === 'dawn' ? 'Dawn' : 'Night'}</h2>
+						<div className={styles.audienceAndInstructions}>
+							<h4 className={styles.audience}>{audience}</h4>
+							<p className={styles.instructions}>{instructionalText}</p>
+						</div>
 						{stage === 'player-selection' && (
-							<div>
+							<div className={styles.phaseBody}>
 								{players.map((player) => {
 									return (
 										<button 
 											key={player.id} 
 											onClick={() => setPlayer(player)}
+											className={styles.selectionButton}
 										>
 											{formatPlayerName(player)}
 										</button>
@@ -83,7 +86,11 @@ export function PhaseSelection() {
 						)}
 						{stage === 'reveal' && (
 							<div>
-								<button onClick={allowReveal}>{playerToReveal ? formatPlayerName(playerToReveal) : 'Reveal'}</button>
+								<button 
+									onClick={allowReveal}
+									className={styles.selectionButton}
+								>{playerToReveal ? formatPlayerName(playerToReveal) : 'Reveal'}
+								</button>
 							</div>
 						)}
 					</div>
