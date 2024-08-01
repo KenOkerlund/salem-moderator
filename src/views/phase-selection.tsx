@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { useSelection } from './use-selection';
 import Button from '../elements/Button';
 import arrowButton from '../assets/svg-icons/arrow.svg';
-// import SettingsButton from '../elements/SettingsButton';
+import SettingsButton from '../elements/SettingsButton';
 import styles from './phase-selection.module.css';
 import { PlayersContext } from '../players-context';
 import { Footer } from './Components/footer/footer';
@@ -30,13 +30,16 @@ export function PhaseSelection() {
 	return (
 		<>
 			{!phase && <div className={styles.phasePage}>
-				{/* <SettingsButton /> */}
+				<SettingsButton />
 				<h1>{phase}</h1>
 				<div className={styles.phaseType + ' ' + styles.dawnPhase}>
 					<h1 className={styles.header}>Dawn</h1>
 					<p>The witches select a player to receive the black cat.</p>
 					<div>
-						<Button size='small' onClick={() => setPhase('dawn')} >
+						<Button 
+							size='small' 
+							onClick={() => setPhase('dawn')} 
+						>
 							Begin
 							<img src={arrowButton} className={styles.arrowIcon} />
 						</Button>
@@ -50,7 +53,10 @@ export function PhaseSelection() {
 					<p>The witches select a player they wish to kill.</p>
 					<p>The constable selects a player to attempt to save.</p>
 					<div>
-						<Button size='small' onClick={() => setPhase('night')}>
+						<Button 
+							size='small' 
+							onClick={() => setPhase('night')}
+						>
 							Begin
 							<img src={arrowButton} className={styles.arrowIcon} />
 						</Button>
@@ -73,24 +79,27 @@ export function PhaseSelection() {
 							<div className={styles.phaseBody}>
 								{players.map((player) => {
 									return (
-										<button 
+										<Button 
 											key={player.id} 
 											onClick={() => setPlayer(player)}
-											className={styles.selectionButton}
+											size='largest'
+											holdDuration={1.5}
 										>
 											{formatPlayerName(player)}
-										</button>
+										</Button>
 									);
 								})}
 							</div> 
 						)}
 						{stage === 'reveal' && (
 							<div>
-								<button 
+								<Button 
 									onClick={allowReveal}
-									className={styles.selectionButton}
+									size='largest'
+									disabled={!!playerToReveal}
+									holdDuration={1.5}
 								>{playerToReveal ? formatPlayerName(playerToReveal) : 'Reveal'}
-								</button>
+								</Button>
 							</div>
 						)}
 					</div>

@@ -63,6 +63,7 @@
 	gap: 59px;
 	align-items: center;
 	overflow: hidden;
+	padding: 0px 5px 40px;
 }
 
 
@@ -105,24 +106,5 @@
 	align-self: center;
 	flex-wrap: wrap;
 	gap: 20px;
-	padding-bottom: 40px;
 	/* background-color: green; */
-}
-
-.selectionButton {
-	width: 280px;
-	height: 160px;
-	background-color: transparent;
-	border: 1px solid #F1ECCB;
-	color: #F1ECCB;
-	font-size: 40px;
-	font-family: "IM Fell English SC", serif;
-	border-radius: 21px;
-}
-
-@media(width < 644px){
-	.selectionButton {
-		width: 200px;
-		height: 55px;
-	}
 }
