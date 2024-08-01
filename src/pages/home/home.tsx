@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import Button from '../elements/Button';
+import Button from '../../components/button/button';
 
-import highlightedPerson from '../assets/images/highlighted-person.png';
-import ModeratorLogo from '../assets/images/moderator-logo.svg';
+import highlightedPerson from '../../assets/images/highlighted-person.png';
+import ModeratorLogo from '../../assets/images/moderator-logo.svg';
 
 import styles from './Home.module.css';
 

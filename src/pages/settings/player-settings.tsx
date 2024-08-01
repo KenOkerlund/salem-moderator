@@ -1,8 +1,8 @@
-import Button from '../../elements/Button';
+import Button from '../../components/button/button';
 import arrowButton from '../../assets/svg-icons/arrow.svg';
-import useSettings from '../use-settings';
+import useSettings from './use-settings';
 import styles from './player-settings.module.css';
-import { TextInput } from '../../elements/input/text-input';
+import { TextInput } from '../../components/input/input';
 import { IconMinus } from '../../assets/html-css-icons/icon-minus';
 import { IconPlus } from '../../assets/html-css-icons/icon-plus';
 import { formatPlayerName } from '../../utils/format-player-name';

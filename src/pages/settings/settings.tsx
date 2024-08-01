@@ -1,10 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
-import { PlayersContext } from '../players-context';
-import { Footer } from './Components/footer/footer';
-import PlayersList from './Components/PlayerSettings';
-import ResetSettings from './Components/ResetSettings';
-import LineBreak from '../elements/LineBreak';
+import { PlayersContext } from '../../contexts/players-context';
+import { Footer } from '../shared-components/footer/footer';
+import PlayersList from '../settings/player-settings';
+import ResetSettings from '../settings/reset-settings';
+import LineBreak from '../../components/line-break/line-break';
 import useSettings from './use-settings';
 import styles from './settings.module.css';
 

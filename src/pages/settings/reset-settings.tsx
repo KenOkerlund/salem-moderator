@@ -1,4 +1,4 @@
-import Button from '../../elements/Button';
+import Button from '../../components/button/button';
 import styles from './reset-settings.module.css';
 
 function ResetSettings(props: {onReset: () => void}) {
