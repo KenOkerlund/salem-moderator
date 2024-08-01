@@ -16,9 +16,10 @@
     line-height: normal;
     transition: background-color 0.3s;
     user-select: none;
+    
 
     &:hover {
-        background-color: #f1eccb15;
+        background-color: rgba(241, 236, 203, 0.082)
     }
 }
 
@@ -38,10 +39,16 @@
     font-size: 40px;
     padding: 0 32px;
     height: 36px;
-
     font-size: 40px;
     padding: 0 32px;
     height: 48px;
+}
+
+.largest {
+    width: 275px;
+    height: 160px;
+    font-size: 40px;
+    border-radius: 21px;
 }
 
 .secondary {
@@ -80,4 +87,30 @@
 .disabled {
     cursor: not-allowed;
     opacity: 0.5;
+}
+
+.holdAnimation {
+    animation-name: buttonProgress;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    background-image: linear-gradient(90deg, transparent 0%, rgba(241, 236, 203, 0.4) 50%);
+    background-size: 200% 100%;
+}
+
+@keyframes buttonProgress {
+    from {
+        background-position: 0 0;
+    }
+
+    to {
+        background-position: -100% 0;
+    }
+}
+
+@media(width < 644px) {
+    .largest {
+        width: 200px;
+        height: 55px;
+        font-size: 30px;
+    }
 }
