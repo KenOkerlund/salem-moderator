@@ -28,7 +28,7 @@ function Button(props: ButtonProps) {
 	} = props;
 
 	const [isHeld, setIsHeld] = useState(false);
-	const holdTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+	const holdTimeoutRef = useRef<number | null>(null);
 
 	const classes = clsx(styles.button, {
 		[styles.small]: size === 'small',
@@ -45,7 +45,7 @@ function Button(props: ButtonProps) {
 
 	const handleMouseDown = () => {
 		setIsHeld(true);
-		holdDuration && (holdTimeoutRef.current = setTimeout(() => {
+		holdDuration && (holdTimeoutRef.current = window.setTimeout(() => {
 			onClick && onClick();
 		}, holdDuration * 1000));
 	};
