@@ -9,7 +9,7 @@ type ButtonProps = {
 	onClick?: () => void;
 	holdDuration?: number;
 	disabled?: boolean;
-	width?: number;
+	width?: 100;
 	iconOnly?: boolean;
 	rotateContent?: boolean;
 };

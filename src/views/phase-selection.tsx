@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { useMediaQuery } from 'react-responsive';
 import { useSelection } from './use-selection';
 import Button from '../elements/Button';
 import arrowButton from '../assets/svg-icons/arrow.svg';
@@ -26,6 +27,9 @@ export function PhaseSelection() {
 		reset,
 	} = useSelection();
 	
+	const isSmallScreen = useMediaQuery({
+		query: '(max-width: 600px)',
+	});
 
 	return (
 		<>
@@ -76,14 +80,15 @@ export function PhaseSelection() {
 							<p className={styles.instructions}>{instructionalText}</p>
 						</div>
 						{stage === 'player-selection' && (
-							<div className={styles.phaseBody}>
+							<div className={styles.playerSelectionButtons}>
 								{players.map((player) => {
 									return (
 										<Button 
 											key={player.id} 
 											onClick={() => setPlayer(player)}
-											size='largest'
+											size={isSmallScreen ? 'large' : 'largest'}
 											holdDuration={1.5}
+											width={100}
 										>
 											{formatPlayerName(player)}
 										</Button>
