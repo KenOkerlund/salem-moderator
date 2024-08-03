@@ -1,7 +1,7 @@
 import { vi } from 'vitest';
 import { renderHook } from '@testing-library/react';
 import useSettings from './use-settings';
-import { createPlayers } from '../players-context';
+import { createPlayers } from '../../contexts/players-context';
 
 describe('Use settings hook', () => {
 	describe('useSettings()', () => {

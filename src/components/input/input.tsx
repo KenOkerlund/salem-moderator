@@ -1,4 +1,4 @@
-import styles from './text-input.module.css';
+import styles from './input.module.css';
 
 type TextInputProps = React.InputHTMLAttributes<HTMLInputElement>;
 

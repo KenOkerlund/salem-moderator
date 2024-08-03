@@ -1,16 +1,16 @@
 import { useContext } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import { useSelection } from './use-selection';
-import Button from '../elements/Button';
-import arrowButton from '../assets/svg-icons/arrow.svg';
-import SettingsButton from '../elements/SettingsButton';
-import styles from './phase-selection.module.css';
-import { PlayersContext } from '../players-context';
-import { Footer } from './Components/footer/footer';
-import { formatPlayerName } from '../utils/format-player-name';
+import Button from '../../components/button/button';
+import arrowButton from '../../assets/svg-icons/arrow.svg';
+import SettingsButton from '../shared-components/settings-button/settings-button';
+import styles from './selection.module.css';
+import { PlayersContext } from '../../contexts/players-context';
+import { Footer } from '../shared-components/footer/footer';
+import { formatPlayerName } from '../../utils/format-player-name';
 
 
-export function PhaseSelection() {
+export default function Selection() {
 	const { players } = useContext(PlayersContext);
 	const {
 		phase, 

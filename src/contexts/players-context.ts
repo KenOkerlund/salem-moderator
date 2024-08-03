@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { Player } from './types';
+import { Player } from '../types';
 
 type PlayerContext = {
 	players: Player[];

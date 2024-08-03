@@ -1,4 +1,4 @@
-import { Player } from '../types';
+import { Player } from '../../types';
 
 const maxPlayers = 12;
 const minPlayers = 4;

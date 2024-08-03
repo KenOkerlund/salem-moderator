@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import Button from '../../../elements/Button';
+import Button from '../../../components/button/button';
 import styles from './footer.module.css';
 
 type FooterProps = {
