@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Player } from '../types';
+import { Player } from '../../types';
 
 type Stage = 'player-selection' | 'confession' | 'reveal';
 
