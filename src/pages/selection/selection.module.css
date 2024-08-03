@@ -98,13 +98,21 @@
 	background-position: center;
 }
 
-.phaseBody {
-	width: 100%;
+.playerSelectionButtons {
+	/* width: 100%;
 	max-width: 580px;
 	display: flex;
 	justify-content: center;
 	align-self: center;
 	flex-wrap: wrap;
+	gap: 20px; */
+	display: grid;
 	gap: 20px;
-	/* background-color: green; */
+	grid-template-columns: 1fr 1fr;
+}
+
+@media(max-width: 600px){
+	.playerSelectionButtons {
+		grid-template-columns: 1fr;
+	}
 }

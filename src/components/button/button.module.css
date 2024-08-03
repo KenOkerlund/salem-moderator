@@ -37,7 +37,6 @@
 
 .large {
     font-size: 40px;
-    padding: 0 32px;
     height: 36px;
     font-size: 40px;
     padding: 0 32px;
@@ -45,7 +44,7 @@
 }
 
 .largest {
-    width: 275px;
+    padding: 0 32px;
     height: 160px;
     font-size: 40px;
     border-radius: 21px;
@@ -104,13 +103,5 @@
 
     to {
         background-position: -100% 0;
-    }
-}
-
-@media(width < 644px) {
-    .largest {
-        width: 200px;
-        height: 55px;
-        font-size: 30px;
     }
 }
