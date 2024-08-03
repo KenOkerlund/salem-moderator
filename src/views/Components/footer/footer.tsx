@@ -4,10 +4,10 @@ import styles from './footer.module.css';
 
 type FooterProps = {
 	autoLeft?: boolean;
-	onPrimaryClick?: () => void;
-	primaryButtonText?: string;
+	onPrimaryClick?:  () => void;
+	primaryButtonText?: string | null;
 	onSecondaryClick?: () => void;
-	secondaryButtonText?: string;
+	secondaryButtonText?: string | null;
 };
 
 export function Footer(props: FooterProps) {
@@ -19,20 +19,17 @@ export function Footer(props: FooterProps) {
 		secondaryButtonText,
 	} = props;
 
-	const showPrimaryButton = onPrimaryClick && primaryButtonText;
-	const showSecondaryButton = onSecondaryClick && secondaryButtonText;
-
 	const classes = clsx(styles.footer, {
 		[styles.autoLeft]: autoLeft,
 	});
 
 	return (
 		<footer className={classes}>
-			{showPrimaryButton && (
-				<Button onClick={onPrimaryClick}>{primaryButtonText}</Button>
+			{primaryButtonText && (
+				<Button disabled={!onPrimaryClick} onClick={onPrimaryClick}>{primaryButtonText}</Button>
 			)}
-			{showSecondaryButton && (
-				<Button variation='secondary' onClick={onSecondaryClick}>
+			{secondaryButtonText && (
+				<Button disabled={!onSecondaryClick} onClick={onSecondaryClick} variation='secondary'>
 					{secondaryButtonText}
 				</Button>
 			)}

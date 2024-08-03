@@ -37,8 +37,6 @@
 	margin-right: max((100vw - 377px) * .2, 0px);
 }
 
-
-
 .header {
 	font-size: 120px;
 }
@@ -47,14 +45,74 @@
 	transform: rotate(-90deg);
 }
 
-
 .constable {
 	display: flex;
 	align-items: center;
 	font-family: IM FELL English SC;
 	font-size: 18px;
 	letter-spacing: 2px;
-    color: #F1ECCB;
+	color: #F1ECCB;
 	accent-color: #3C7429;
 	text-transform: lowercase;
+}
+
+.selectionPage {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	gap: 59px;
+	align-items: center;
+	overflow: hidden;
+	padding: 0px 5px 40px;
+}
+
+
+.phaseTitle {
+	font-size: 80px;
+	letter-spacing: 4px;
+}
+
+.audience {
+	font-size: 40px;
+	letter-spacing: 4px;
+}
+
+.audienceAndInstructions {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+}
+
+.dawnBackground {
+	background-image: url(../assets/images/black-cat.png);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.nightBackground {
+	background-image: url(../assets/images/large-cat-eyes.png);
+	/* background-image: url(../assets/images/cat-eyesl.png); */
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.playerSelectionButtons {
+	/* width: 100%;
+	max-width: 580px;
+	display: flex;
+	justify-content: center;
+	align-self: center;
+	flex-wrap: wrap;
+	gap: 20px; */
+	display: grid;
+	gap: 20px;
+	grid-template-columns: 1fr 1fr;
+}
+
+@media(max-width: 600px){
+	.playerSelectionButtons {
+		grid-template-columns: 1fr;
+	}
 }

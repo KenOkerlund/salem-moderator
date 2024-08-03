@@ -1,109 +1,134 @@
-import { renderHook, act } from '@testing-library/react';
-import useSettings, { createPlayers } from './use-settings';
+import { vi } from 'vitest';
+import { renderHook } from '@testing-library/react';
+import useSettings from './use-settings';
+import { createPlayers } from '../players-context';
 
 describe('Use settings hook', () => {
-	describe('createPlayers()', () => {
-		it('should initalize with 4 players', () => {
-			expect(createPlayers()).toHaveLength(4);
-		});
-	});
-
 	describe('useSettings()', () => {
-		it('should initialize with 4 players (hook)', () => {
-			const { result } = renderHook(() => useSettings());
-
-			expect(result.current.players.length).toBe(4);
-		});
-
 		it('should add a player', () => {
-			const { result } = renderHook(() => useSettings());
+			// Arrange
+			const mockedFn = vi.fn();
+			const { result } = renderHook(() => useSettings(createPlayers(), mockedFn));
 
-			act(() => {
-				result.current.addPlayer();
-			});
+			// Act
+			result.current.addPlayer();
 
-			const lastPlayer = result.current.players[4];
+			// Assert
 
-			expect(result.current.players.length).toBe(5);
+			// option 1
+			expect(mockedFn).toHaveBeenCalledWith(
+				[...createPlayers(), { id: 4, name: '' }],
+			);
+
+			// option 2
+			const calledWith = mockedFn.mock.calls[0][0];
+			const lastPlayer = calledWith[4];
+			expect(calledWith.length).toBe(5);
 			expect(lastPlayer).toMatchObject({ id: 4, name: '' });
 		});
 
+		it('should increment the largest id by 1 when a new player is created', () => {
+			// Arrange
+			const mockedFn = vi.fn();
+			const { result } = renderHook(() => useSettings([{ id: 100, name: 'Test' }], mockedFn));
+
+			// Act
+			result.current.addPlayer();
+
+			// Assert
+			// option 1
+			expect(mockedFn).toHaveBeenCalledWith([{ id: 100, name: 'Test' }, { id: 101, name: '' }]);
+
+			//option 2
+			const lastPlayer = mockedFn.mock.calls[0][0][1];
+			// const lastPlayer = mockedFn.mock.lastCall[0].at(-1);
+			expect(lastPlayer.id).toBe(101);
+		});
+
 		it('should not be able to have more than 12 players', () => {
-			const { result } = renderHook(() => useSettings());
-			for (let i = 4; i < 15; i++) {
-				act(() => {
-					result.current.addPlayer();
-				});
-			}
-			expect(result.current.players.length).toBe(12);
+			// Arrange
+			const mockedFn = vi.fn();
+			const twelvePlayers = Array.from({ length: 12 }).map((_, i) => ({ id: i, name: `${i}` }));
+			const { result } = renderHook(() => useSettings(twelvePlayers, mockedFn));
+
+			// Act
+			result.current.addPlayer();
+
+			// Assert
+			expect(mockedFn).not.toHaveBeenCalled();
 		});
 
 		it('should remove a player', () => {
-			const { result } = renderHook(() => useSettings());
-			act(() => {
-				result.current.addPlayer();
-			});
-			act(() => {
-				result.current.removePlayer(result.current.players[0].id);
-			});
-			expect(result.current.players.length).toBe(4);
+			// Arrange
+			const mockedFn = vi.fn();
+			const { result } = renderHook(() => useSettings([...createPlayers(), { id: 101, name: 'Remove Me' }], mockedFn));
+
+			// Act
+			result.current.removePlayer(101);
+
+			// Assert
+			expect(mockedFn).toHaveBeenCalledWith(createPlayers());
 		});
 
 		it('should not be able to have less than 4 players', () => {
-			const { result } = renderHook(() => useSettings());
-			expect(result.current.players.length).toBe(4);
+			// Arrange
+			const mockedFn = vi.fn();
+			const fivePlayers = Array.from({ length: 4 }).map((_, i) => ({ id: i, name: `${i}` }));
+			const firstPlayerId = fivePlayers[0].id;
+			const { result } = renderHook(() => useSettings(fivePlayers, mockedFn));
 
-			act(() => {
-				result.current.removePlayer(result.current.players[0].id);
-			});
+			// Act
+			result.current.removePlayer(firstPlayerId);
 
-			expect(result.current.players.length).toBe(4);
+			// Assert
+			expect(mockedFn).not.toHaveBeenCalled();
 		});
 
 		it('should change a player name', () => {
-			const { result } = renderHook(() => useSettings());
+			// Arrange
+			const mockedfn = vi.fn();
+			const { result } = renderHook(() => useSettings(createPlayers(), mockedfn));
 			const mockEvent = { target: { value: 'John Smith' } } as React.ChangeEvent<HTMLInputElement>;
-			act(() => {
-				result.current.changePlayerName(mockEvent, 0);
-			});
-			// note that players[0] and the 2nd parameter in act happen to be the same number.
-			expect(result.current.players[0].name).toBe('John Smith');
+			
+			// Act
+			result.current.changePlayerName(mockEvent, 0);
+			
+			// Assert
+
+			// Option 1, to show diving into the mocked function
+			// expect(mockedfn).toHaveBeenCalled();
+			// expect(mockedfn.mock.calls[0][0][0].name).toEqual('John Smith');
+
+			// This assertion is better than the first because it ensures that
+			// changePlayerName didn't do anything else to the players
+			const expectedResult = [{ id: 0, name: 'John Smith' }, { id: 1, name: '' }, { id: 2, name: '' }, { id:3, name: '' }];
+			expect(mockedfn).toHaveBeenCalledWith(expectedResult);
 		});
 
 		it('should move a player up', () => {
-			const { result } = renderHook(() => useSettings());
+			// Arrange
+			const mockedFn = vi.fn();
+			const { result } = renderHook(() => useSettings(createPlayers(), mockedFn));
 
-			act(() => {
-				result.current.movePlayerUp(1);
-			});
+			// Act
+			result.current.movePlayerUp(1);
 
-			expect(result.current.players[0].id).toBe(1);
+			// Assert
+			const expectedResult = [{ id: 1, name: '' }, { id: 0, name: '' }, { id: 2, name: '' }, { id:3, name: '' }];
+			expect(mockedFn).toHaveBeenCalledWith(expectedResult);
 		});
 
 		it('should move a player down', () => {
-			const { result } = renderHook(() => useSettings());
+			// Arrange
+			const mockedFn = vi.fn();
+			const { result } = renderHook(() => useSettings(createPlayers(), mockedFn));
 
-			act(() => {
-				result.current.movePlayerDown(0);
-			});
+			// Act
+			result.current.movePlayerDown(1);
 
-			expect(result.current.players[0].id).toBe(1);
-		});
-
-		it('should reset players', () => {
-			const { result } = renderHook(() => useSettings());
-			const playersFromCreatePlayers = createPlayers();
-
-			// Change something about the current players
-			act(() => {
-				result.current.movePlayerDown(0);
-			});
-
-			act(() => {
-				result.current.resetPlayers();
-			});
-
-			expect(result.current.players).toMatchObject(playersFromCreatePlayers);
+			// Assert
+			const expectedResult = [{ id: 0, name: '' }, { id: 2, name: '' }, { id: 1, name: '' }, { id:3, name: '' }];
+			expect(mockedFn).toHaveBeenCalledWith(expectedResult);
 		});
 	});
 });

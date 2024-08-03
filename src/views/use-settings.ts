@@ -1,33 +1,9 @@
-import { useState } from 'react';
 import { Player } from '../types';
 
 const maxPlayers = 12;
 const minPlayers = 4;
 
-export function createPlayers(): Player[] {
-	return [
-		{
-			id: 0,
-			name: '',
-		},
-		{
-			id: 1,
-			name: '',
-		},
-		{
-			id: 2,
-			name: '',
-		},
-		{
-			id: 3,
-			name: '',
-		},
-	];
-}
-
-export default function useSettings() {
-	const [players, setPlayers] = useState<Player[]>(createPlayers());
-
+export default function useSettings(players: Player[], setPlayers: (player: Player[]) => void) {
 	const changePlayerName = (e: React.ChangeEvent<HTMLInputElement>, id: number) => {
 		const copyPlayers = [...players];
 		const player = copyPlayers.find(p => p.id === id);
@@ -73,10 +49,6 @@ export default function useSettings() {
 		setPlayers(copyPlayers);
 	};
 
-	const resetPlayers = () => {
-		setPlayers(createPlayers());
-	};
-
 	return {
 		players,
 		changePlayerName,
@@ -86,6 +58,5 @@ export default function useSettings() {
 		canRemovePlayer: players.length > minPlayers,
 		movePlayerDown,
 		movePlayerUp,
-		resetPlayers,
 	};
 }
