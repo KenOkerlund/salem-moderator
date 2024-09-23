@@ -44,7 +44,7 @@ export function useSelection() {
 				'Select a player to receive the Black Cat. You may select yourself.',
 			moderatorSpeech: [
 				'All players close your eyes.',
-				`Everyone's eyes should be closed.`,
+				'Everyone\'s eyes should be closed.',
 				'If you have, or have ever had a witch card, open your eyes, and choose any player to give the black cat. You may even choose a witch.',
 			],
 			audience: 'Witches',
@@ -60,10 +60,10 @@ export function useSelection() {
 			instructionalText: 'Reveal the player who was given the Black Cat.',
 			moderatorSpeech: !isRevealing
 				? [
-						'The witches have made their choice.',
-						'Witches, close your eyes.',
-						'Everyone, open your eyes.',
-				  ]
+					'The witches have made their choice.',
+					'Witches, close your eyes.',
+					'Everyone, open your eyes.',
+				]
 				: undefined,
 			audience: 'Players',
 			setPlayer: () => {},
@@ -79,7 +79,7 @@ export function useSelection() {
 				'Select a player to kill. You may select yourself.',
 			moderatorSpeech: [
 				'All players close your eyes.',
-				`Everyone's eyes should be closed.`,
+				'Everyone\'s eyes should be closed.',
 				'If you have, or have ever had a witch card, open your eyes, and choose any player to kill. You may even choose a witch.',
 			],
 			audience: 'Witches',
@@ -117,10 +117,10 @@ export function useSelection() {
 				'Reveal the player who was protected by the Constable.',
 			moderatorSpeech: !isRevealing
 				? [
-						'The constable has made their choice.',
-						'Constable, close your eyes.',
-						'Everyone, open your eyes.',
-				  ]
+					'The constable has made their choice.',
+					'Constable, close your eyes.',
+					'Everyone, open your eyes.',
+				]
 				: undefined,
 			audience: 'Players',
 			setPlayer: () => {},
@@ -128,19 +128,19 @@ export function useSelection() {
 			playerToReveal: isRevealing ? constableSelection : null,
 			next: isRevealing
 				? () => {
-						setIsRevealing(false);
-						nextStep();
-				  }
+					setIsRevealing(false);
+					nextStep();
+				}
 				: null,
 		},
 		{
 			instructionalText: 'Decide if you want to confess.',
 			moderatorSpeech: !constableSelection
 				? [
-						'The witches have made a choice.',
-						'Witches, close your eyes.',
-						'Everyone, open your eyes.',
-				  ]
+					'The witches have made a choice.',
+					'Witches, close your eyes.',
+					'Everyone, open your eyes.',
+				]
 				: undefined,
 			audience: 'Players',
 			setPlayer: () => {},
@@ -180,7 +180,7 @@ export function useSelection() {
 				if (!queue.length) {
 					return;
 				}
-				let currentSpeech = queue.shift();
+				const currentSpeech = queue.shift();
 				const utterance = new SpeechSynthesisUtterance(currentSpeech);
 				utterance.voice = voice;
 				utterance.rate = 0.75;
