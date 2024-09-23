@@ -170,8 +170,6 @@ export function useSelection() {
 	const currentStep = phase === 'dawn' ? dawnSteps[step] : nightSteps[step];
 
 	useEffect(() => {
-		console.log('Clearing this stuff out');
-
 		window.speechSynthesis.cancel();
 		window.clearTimeout(speechDelayTimer);
 		if (phase && currentStep.moderatorSpeech) {
