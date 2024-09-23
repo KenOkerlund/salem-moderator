@@ -1,16 +1,22 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+
 import { Player } from '../../types';
 
 type Stage = 'player-selection' | 'confession' | 'reveal';
 
 type Step = {
 	instructionalText: string;
+	moderatorSpeech?: string[];
 	audience: 'Witches' | 'Players' | 'Constable';
 	setPlayer: (player: Player) => void;
 	stage: Stage;
 	playerToReveal: null | undefined | Player;
 	next: null | (() => void);
-}
+};
+
+const voice = window.speechSynthesis.getVoices()[1];
+
+let speechDelayTimer: number | undefined = undefined;
 
 export function useSelection() {
 	const [phase, setPhase] = useState<'dawn' | 'night'>();
@@ -34,7 +40,13 @@ export function useSelection() {
 
 	const dawnSteps: Step[] = [
 		{
-			instructionalText: 'Select a player to receive the Black Cat. You may select yourself.',
+			instructionalText:
+				'Select a player to receive the Black Cat. You may select yourself.',
+			moderatorSpeech: [
+				'All players close your eyes.',
+				`Everyone's eyes should be closed.`,
+				'If you have, or have ever had a witch card, open your eyes, and choose any player to give the black cat. You may even choose a witch.',
+			],
 			audience: 'Witches',
 			setPlayer: (player: Player) => {
 				setWitchesSelection(player);
@@ -46,6 +58,13 @@ export function useSelection() {
 		},
 		{
 			instructionalText: 'Reveal the player who was given the Black Cat.',
+			moderatorSpeech: !isRevealing
+				? [
+						'The witches have made their choice.',
+						'Witches, close your eyes.',
+						'Everyone, open your eyes.',
+				  ]
+				: undefined,
 			audience: 'Players',
 			setPlayer: () => {},
 			stage: 'reveal',
@@ -56,14 +75,19 @@ export function useSelection() {
 
 	const nightSteps: Step[] = [
 		{
-			instructionalText: 'Select a player to kill. You may select yourself.',
+			instructionalText:
+				'Select a player to kill. You may select yourself.',
+			moderatorSpeech: [
+				'All players close your eyes.',
+				`Everyone's eyes should be closed.`,
+				'If you have, or have ever had a witch card, open your eyes, and choose any player to kill. You may even choose a witch.',
+			],
 			audience: 'Witches',
 			setPlayer: (player: Player) => {
 				setWitchesSelection(player);
 				if (isConstableChecked) {
 					nextStep();
-				}
-				else {
+				} else {
 					skipSteps(2);
 				}
 			},
@@ -72,7 +96,13 @@ export function useSelection() {
 			next: null,
 		},
 		{
-			instructionalText: 'Select a player to protect. You may NOT select yourself.',
+			instructionalText:
+				'Select a player to protect. You may NOT select yourself.',
+			moderatorSpeech: [
+				// 'The witches have made their choice.',
+				// 'Witches, close your eyes.',
+				// 'Constable, open your eyes and choose a player to protect this night. You cannot choose yourself!',
+			],
 			audience: 'Constable',
 			setPlayer: (player: Player) => {
 				setConstableSelection(player);
@@ -83,18 +113,35 @@ export function useSelection() {
 			next: null,
 		},
 		{
-			instructionalText: 'Reveal the player who was protected by the Constable.',
+			instructionalText:
+				'Reveal the player who was protected by the Constable.',
+			moderatorSpeech: !isRevealing
+				? [
+						'The constable has made their choice.',
+						'Constable, close your eyes.',
+						'Everyone, open your eyes.',
+				  ]
+				: undefined,
 			audience: 'Players',
 			setPlayer: () => {},
 			stage: 'reveal',
 			playerToReveal: isRevealing ? constableSelection : null,
-			next: isRevealing ? () => {
-				setIsRevealing(false);
-				nextStep(); 
-			} : null,
+			next: isRevealing
+				? () => {
+						setIsRevealing(false);
+						nextStep();
+				  }
+				: null,
 		},
 		{
 			instructionalText: 'Decide if you want to confess.',
+			moderatorSpeech: !constableSelection
+				? [
+						'The witches have made a choice.',
+						'Witches, close your eyes.',
+						'Everyone, open your eyes.',
+				  ]
+				: undefined,
 			audience: 'Players',
 			setPlayer: () => {},
 			stage: 'confession',
@@ -104,7 +151,8 @@ export function useSelection() {
 			},
 		},
 		{
-			instructionalText: 'Reveal the player who was attacked by the Witches.',
+			instructionalText:
+				'Reveal the player who was attacked by the Witches.',
 			audience: 'Players',
 			setPlayer: () => {},
 			stage: 'reveal',
@@ -114,10 +162,39 @@ export function useSelection() {
 	];
 
 	const handleChangeConstableChecked = () => {
-		setIsConstableChecked(prevState => !prevState);
+		setIsConstableChecked((prevState) => !prevState);
 	};
 
 	const allowReveal = () => setIsRevealing(true);
+
+	const currentStep = phase === 'dawn' ? dawnSteps[step] : nightSteps[step];
+
+	useEffect(() => {
+		console.log('Clearing this stuff out');
+
+		window.speechSynthesis.cancel();
+		window.clearTimeout(speechDelayTimer);
+		if (phase && currentStep.moderatorSpeech) {
+			const queue = [...currentStep.moderatorSpeech];
+			const speakNext = () => {
+				if (!queue.length) {
+					return;
+				}
+				let currentSpeech = queue.shift();
+				const utterance = new SpeechSynthesisUtterance(currentSpeech);
+				utterance.voice = voice;
+				utterance.rate = 0.75;
+				utterance.pitch = 0.75;
+				utterance.onend = () => {
+					if (queue.length) {
+						speechDelayTimer = window.setTimeout(speakNext, 1000);
+					}
+				};
+				window.speechSynthesis.speak(utterance);
+			};
+			speakNext();
+		}
+	}, [phase, currentStep]);
 
 	return {
 		phase,
@@ -126,6 +203,6 @@ export function useSelection() {
 		handleChangeConstableChecked,
 		allowReveal,
 		reset,
-		...(phase === 'dawn' ? dawnSteps[step] : nightSteps[step]),
+		...currentStep,
 	};
 }
