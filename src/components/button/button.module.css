@@ -16,7 +16,8 @@
     line-height: normal;
     transition: background-color 0.3s;
     user-select: none;
-    
+    -webkit-user-select: none;
+    touch-action: manipulation;
 
     &:hover {
         background-color: rgba(241, 236, 203, 0.082)

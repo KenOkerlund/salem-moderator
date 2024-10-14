@@ -1,4 +1,4 @@
-import { ReactNode, useRef, useState } from 'react';
+import { ReactNode, useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import styles from './button.module.css';
 
@@ -27,6 +27,7 @@ function Button(props: ButtonProps) {
 		holdDuration,
 	} = props;
 
+	const buttonRef = useRef<HTMLButtonElement | null>(null);
 	const [isHeld, setIsHeld] = useState(false);
 	const holdTimeoutRef = useRef<number | null>(null);
 
@@ -55,8 +56,22 @@ function Button(props: ButtonProps) {
 		holdTimeoutRef.current && clearTimeout(holdTimeoutRef.current);
 	};
 
+	useEffect(() => {
+		const currentRef = buttonRef.current;
+		const preventContextMenu = (e: MouseEvent) => {
+			e.preventDefault();
+		};
+
+		currentRef?.addEventListener('contextmenu', preventContextMenu);
+
+		return () => {
+			currentRef?.removeEventListener('contextmenu', preventContextMenu);
+		};
+	}, [buttonRef]);
+
 	return (
 		<button
+			ref={buttonRef}
 			style={{
 				animationDuration: holdDuration ? `${holdDuration}s` : undefined,
 			}}
