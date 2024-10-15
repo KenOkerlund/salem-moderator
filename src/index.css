@@ -69,6 +69,7 @@ body {
     background-image: url('./assets/images/background-texture.png');
     background-size: cover;
     background-repeat: no-repeat;
+	background-attachment: fixed;
 	color: #F1ECCB;
 	/* @TODO This may not be the best place to put the padding */
 	padding: 24px 32px 0;

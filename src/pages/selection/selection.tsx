@@ -43,10 +43,10 @@ export default function Selection() {
 				<div className={styles.phasePage}>
 					<PageBackgroundImage image={graveRobberImage} />
 					<SettingsButton />
-					<h1>{phase}</h1>
+					{phase && <h1>{phase}</h1>}
 					<div className={styles.phaseType + ' ' + styles.dawnPhase}>
 						<h1 className={styles.header}>Dawn</h1>
-						<p>
+						<p className={styles.instructions}>
 							The witches select a player to receive the black
 							cat.
 						</p>
@@ -68,8 +68,8 @@ export default function Selection() {
 
 					<div className={styles.phaseType + ' ' + styles.nightPhase}>
 						<h1 className={styles.header}>Night</h1>
-						<p>The witches select a player they wish to kill.</p>
-						<p>
+						<p className={styles.instructions}>The witches select a player they wish to kill.</p>
+						<p className={styles.instructions}>
 							The constable selects a player to attempt to save.
 						</p>
 						<div>
