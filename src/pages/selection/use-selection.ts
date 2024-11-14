@@ -99,9 +99,9 @@ export function useSelection() {
 			instructionalText:
 				'Select a player to protect. You may NOT select yourself.',
 			moderatorSpeech: [
-				// 'The witches have made their choice.',
-				// 'Witches, close your eyes.',
-				// 'Constable, open your eyes and choose a player to protect this night. You cannot choose yourself!',
+				'The witches have made their choice.',
+				'Witches, close your eyes.',
+				'Constable, open your eyes and choose a player to protect this night. You cannot choose yourself!',
 			],
 			audience: 'Constable',
 			setPlayer: (player: Player) => {
