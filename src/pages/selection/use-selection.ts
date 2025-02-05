@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 
+import { useSalemStore } from '../../stores/salem-store';
+
 import { Player } from '../../types';
 
 type Stage = 'player-selection' | 'confession' | 'reveal';
@@ -26,6 +28,8 @@ export function useSelection() {
 	const [constableSelection, setConstableSelection] = useState<Player>();
 	const [isConstableChecked, setIsConstableChecked] = useState(true);
 	const [isRevealing, setIsRevealing] = useState(false);
+
+	const instructionSpeech = useSalemStore(state => state.instructionSpeech);
 
 	const reset = () => {
 		setPhase(undefined);
@@ -172,7 +176,7 @@ export function useSelection() {
 	useEffect(() => {
 		window.speechSynthesis.cancel();
 		window.clearTimeout(speechDelayTimer);
-		if (phase && currentStep.moderatorSpeech) {
+		if (phase && currentStep.moderatorSpeech && instructionSpeech) {
 			const queue = [...currentStep.moderatorSpeech];
 			const speakNext = () => {
 				if (!queue.length) {
@@ -192,7 +196,7 @@ export function useSelection() {
 			};
 			speakNext();
 		}
-	}, [phase, currentStep]);
+	}, [phase, currentStep, instructionSpeech]);
 
 	return {
 		phase,
