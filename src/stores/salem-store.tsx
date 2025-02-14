@@ -60,27 +60,14 @@ export function getOrCreatePlayers(): Player[] {
 	return createPlayers();
 }
 
+function savePlayersToLocalStorage(players: Player[]){
+	window.localStorage.setItem(salemPlayerLocalStorageKey, JSON.stringify(players));
+}
+
 export const useSalemStore = create<SalemState>((set) => ({
 	instructionSpeech: true,
 	setInstructionSpeech: (enabled) => set(() => ({ instructionSpeech: enabled })),
-	players: [
-		{
-			id: 0,
-			name: '',
-		},
-		{
-			id: 1,
-			name: '',
-		},
-		{
-			id: 2,
-			name: '',
-		},
-		{
-			id: 3,
-			name: '',
-		},
-	],
+	players: getOrCreatePlayers(),
 	setPlayerName: (playerId, name) => 
 		set((state) => {
 			const players = [...state.players];
@@ -88,9 +75,13 @@ export const useSalemStore = create<SalemState>((set) => ({
 			if (playerIndex >= 0) {
 				players[playerIndex].name = name;
 			}
+			savePlayersToLocalStorage(players);
 			return { players };
 		}),
-	resetPlayers: () => set(() => ({ players: createPlayers() })),
+	resetPlayers: () => {
+		set(() => ({ players: createPlayers() }));
+		window.localStorage.removeItem(salemPlayerLocalStorageKey);
+	},
 	addPlayer: () => set((state) => {
 		if (state.players.length >= maxPlayers) {
 			return state;
@@ -99,6 +90,7 @@ export const useSalemStore = create<SalemState>((set) => ({
 		const id = Math.max(...copyPlayers.map(p => p.id)) + 1;
 		//player.name needs to be 1 value higher than player.id because the index starts at 0 and the name starts at "Player 1"
 		copyPlayers.push({ id, name: '' });
+		savePlayersToLocalStorage(copyPlayers);
 		return { players: copyPlayers };
 	}),
 	removePlayer: (playerId) => set((state) => {
@@ -106,6 +98,7 @@ export const useSalemStore = create<SalemState>((set) => ({
 			return state;
 		}
 		const copyPlayers = state.players.filter(p => p.id !== playerId);
+		savePlayersToLocalStorage(copyPlayers);
 		return { players: copyPlayers };
 	}),
 	movePlayerDown: (playerId) => set((state) => {
@@ -113,6 +106,7 @@ export const useSalemStore = create<SalemState>((set) => ({
 		const playerIndex = copyPlayers.findIndex(p => p.id === playerId);
 		const elementMoving = copyPlayers.splice(playerIndex, 1);
 		copyPlayers.splice(playerIndex + 1, 0, elementMoving[0]);
+		savePlayersToLocalStorage(copyPlayers);
 		return { players: copyPlayers };
 	}),
 	movePlayerUp: (playerId) => set((state) => {
@@ -120,6 +114,7 @@ export const useSalemStore = create<SalemState>((set) => ({
 		const playerIndex = copyPlayers.findIndex(p => p.id === playerId);
 		const elementMoving = copyPlayers.splice(playerIndex, 1);
 		copyPlayers.splice(playerIndex - 1, 0, elementMoving[0]);
+		savePlayersToLocalStorage(copyPlayers);
 		return { players: copyPlayers };
 	}),
 }));
