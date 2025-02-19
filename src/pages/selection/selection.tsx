@@ -1,8 +1,5 @@
-import { useContext } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import { useSelection } from './use-selection';
-
-import { PlayersContext } from '../../contexts/players-context';
 import { formatPlayerName } from '../../utils/format-player-name';
 import { Footer } from '../shared-components/footer/footer';
 import PageBackgroundImage from '../../components/page-background-image/page-background-image';
@@ -15,9 +12,10 @@ import catImage from '../../assets/images/black-cat.png';
 import catEyesImage from '../../assets/images/large-cat-eyes.png';
 
 import styles from './selection.module.css';
+import { useSalemStore } from '../../stores/salem-store';
 
 export default function Selection() {
-	const { players } = useContext(PlayersContext);
+	const players = useSalemStore(state => state.players);
 	const {
 		phase,
 		setPhase,
