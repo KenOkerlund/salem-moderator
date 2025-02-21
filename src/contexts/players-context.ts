@@ -5,7 +5,7 @@ type PlayerContext = {
 	players: Player[];
 	setPlayers: (players: Player[]) => void;
 	resetPlayers: () => void;
-}
+};
 
 export const salemPlayerLocalStorageKey = 'salem_players';
 
@@ -32,7 +32,9 @@ export function createPlayers(): Player[] {
 
 // TODO KEN or KEVIN Unit test
 export function getOrCreatePlayers(): Player[] {
-	const possibleStoredSalemPlayer = window.localStorage.getItem(salemPlayerLocalStorageKey);
+	const possibleStoredSalemPlayer = window.localStorage.getItem(
+		salemPlayerLocalStorageKey,
+	);
 	if (possibleStoredSalemPlayer) {
 		try {
 			const players = JSON.parse(possibleStoredSalemPlayer);
@@ -56,6 +58,6 @@ export function getOrCreatePlayers(): Player[] {
 
 export const PlayersContext = createContext<PlayerContext>({
 	players: [],
-	setPlayers: () => { },
-	resetPlayers: () => { },
+	setPlayers: () => {},
+	resetPlayers: () => {},
 });

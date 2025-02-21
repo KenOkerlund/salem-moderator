@@ -3,10 +3,16 @@ import { Player } from '../../types';
 const maxPlayers = 12;
 const minPlayers = 4;
 
-export default function useSettings(players: Player[], setPlayers: (player: Player[]) => void) {
-	const changePlayerName = (e: React.ChangeEvent<HTMLInputElement>, id: number) => {
+export default function useSettings(
+	players: Player[],
+	setPlayers: (player: Player[]) => void,
+) {
+	const changePlayerName = (
+		e: React.ChangeEvent<HTMLInputElement>,
+		id: number,
+	) => {
 		const copyPlayers = [...players];
-		const player = copyPlayers.find(p => p.id === id);
+		const player = copyPlayers.find((p) => p.id === id);
 		if (!player) {
 			return;
 		}
@@ -19,7 +25,7 @@ export default function useSettings(players: Player[], setPlayers: (player: Play
 			return;
 		}
 		const copyPlayers = [...players];
-		const id = Math.max(...players.map(p => p.id)) + 1;
+		const id = Math.max(...players.map((p) => p.id)) + 1;
 		//player.name needs to be 1 value higher than player.id because the index starts at 0 and the name starts at "Player 1"
 		copyPlayers.push({ id, name: '' });
 		setPlayers(copyPlayers);
@@ -29,13 +35,13 @@ export default function useSettings(players: Player[], setPlayers: (player: Play
 		if (players.length <= minPlayers) {
 			return;
 		}
-		const copyPlayers = players.filter(p => p.id !== id);
+		const copyPlayers = players.filter((p) => p.id !== id);
 		setPlayers(copyPlayers);
 	};
 
 	const movePlayerDown = (id: Player['id']) => {
 		const copyPlayers = [...players];
-		const playerIndex = copyPlayers.findIndex(p => p.id === id);
+		const playerIndex = copyPlayers.findIndex((p) => p.id === id);
 		const elementMoving = copyPlayers.splice(playerIndex, 1);
 		copyPlayers.splice(playerIndex + 1, 0, elementMoving[0]);
 		setPlayers(copyPlayers);
@@ -43,7 +49,7 @@ export default function useSettings(players: Player[], setPlayers: (player: Play
 
 	const movePlayerUp = (id: Player['id']) => {
 		const copyPlayers = [...players];
-		const playerIndex = copyPlayers.findIndex(p => p.id === id);
+		const playerIndex = copyPlayers.findIndex((p) => p.id === id);
 		const elementMoving = copyPlayers.splice(playerIndex, 1);
 		copyPlayers.splice(playerIndex - 1, 0, elementMoving[0]);
 		setPlayers(copyPlayers);

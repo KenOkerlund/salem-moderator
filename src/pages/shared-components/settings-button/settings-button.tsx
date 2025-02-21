@@ -13,12 +13,9 @@ function SettingsButton() {
 			<Button
 				iconOnly
 				onClick={() => navigate('/settings/')}
-				variation='secondary'
+				variation="secondary"
 			>
-				<img
-					src={settingsIcon}
-					alt='gear icon'
-				/>
+				<img src={settingsIcon} alt="gear icon" />
 			</Button>
 		</div>
 	);

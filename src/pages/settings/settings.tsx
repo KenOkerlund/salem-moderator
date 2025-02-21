@@ -10,19 +10,26 @@ function Settings() {
 	const navigate = useNavigate();
 
 	const instructionSpeech = useSalemStore((state) => state.instructionSpeech);
-	const setInstructionSpeech = useSalemStore((state) => state.setInstructionSpeech);
+	const setInstructionSpeech = useSalemStore(
+		(state) => state.setInstructionSpeech,
+	);
 
 	return (
 		<>
 			<div className={styles.settings}>
-				<PlayersList/>
+				<PlayersList />
 
 				<LineBreak />
 
 				<div className={styles.resetSettings}>
 					<h2>Audio Settings</h2>
 					<p>Turns the audio on or off.</p>
-					<input type="checkbox" value='audio' checked={instructionSpeech} onChange={() => (setInstructionSpeech(!instructionSpeech))}/>
+					<input
+						type="checkbox"
+						value="audio"
+						checked={instructionSpeech}
+						onChange={() => setInstructionSpeech(!instructionSpeech)}
+					/>
 				</div>
 
 				<LineBreak />
@@ -32,9 +39,9 @@ function Settings() {
 			<Footer
 				autoLeft
 				onPrimaryClick={() => navigate('/selection')}
-				primaryButtonText='Play'
+				primaryButtonText="Play"
 				onSecondaryClick={() => navigate('/')}
-				secondaryButtonText='Quit'
+				secondaryButtonText="Quit"
 			/>
 		</>
 	);
