@@ -1,24 +1,25 @@
+import { useCanAddPlayer, useCanRemovePlayer, useSalemStore } from '../../stores/salem-store';
 import Button from '../../components/button/button';
 import arrowButton from '../../assets/svg-icons/arrow.svg';
-import useSettings from './use-settings';
 import styles from './player-settings.module.css';
 import { TextInput } from '../../components/input/input';
 import { IconMinus } from '../../assets/html-css-icons/icon-minus';
 import { IconPlus } from '../../assets/html-css-icons/icon-plus';
 import { formatPlayerName } from '../../utils/format-player-name';
 
-function Settings(props: Omit<ReturnType<typeof useSettings>, 'resetPlayers'>) {
-	const {
-		players,
-		changePlayerName,
-		addPlayer,
-		canAddPlayer,
-		removePlayer,
-		canRemovePlayer,
-		movePlayerDown,
-		movePlayerUp,
-	} = props;
 
+function PlayersList(){
+
+	const players = useSalemStore((state) => state.players);
+	const setPlayerName = useSalemStore((state) => state.setPlayerName);
+	const addPlayer = useSalemStore((state) => state.addPlayer);
+	const removePlayer = useSalemStore((state) => state.removePlayer);
+	const movePlayerDown = useSalemStore((state) => state.movePlayerDown);
+	const movePlayerUp = useSalemStore((state) => state.movePlayerUp);
+	// const resetPlayers = useSalemStore((state) => state.resetPlayers);
+
+	const isAddPlayerButtonEnabled = useCanAddPlayer();
+	const isRemovePlayerButtonEnabled = useCanRemovePlayer();
 	const isThisTheFirstPlayer = (i: number) => i === players[0].id;
 	const isThisTheLastPlayer = (i: number) => i === players[players.length - 1].id;
 
@@ -33,14 +34,14 @@ function Settings(props: Omit<ReturnType<typeof useSettings>, 'resetPlayers'>) {
 								<Button
 									iconOnly
 									size='small'
-									disabled={!canRemovePlayer}
+									disabled={!isRemovePlayerButtonEnabled}
 									onClick={() => removePlayer(player.id)}
 								>
 									<IconMinus />
 								</Button>
 								<TextInput
 									placeholder={formatPlayerName(player)}
-									onChange={(e) => changePlayerName(e, player.id)} value={player.name}
+									onChange={(e) => setPlayerName(player.id, e.target.value)} value={player.name}
 								/>
 								<Button
 									iconOnly
@@ -64,7 +65,7 @@ function Settings(props: Omit<ReturnType<typeof useSettings>, 'resetPlayers'>) {
 						);
 					})
 				}
-				{canAddPlayer && <div>
+				{isAddPlayerButtonEnabled && <div>
 					<Button size="small" onClick={addPlayer}>
 						<IconPlus /> Add Player
 					</Button>
@@ -74,4 +75,4 @@ function Settings(props: Omit<ReturnType<typeof useSettings>, 'resetPlayers'>) {
 	);
 }
 
-export default Settings;
+export default PlayersList;
