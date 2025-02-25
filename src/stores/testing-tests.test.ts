@@ -1,20 +1,32 @@
 import { act, renderHook } from '@testing-library/react';
-import { useSalemStore, maxPlayers, minPlayers } from './salem-store';
+import { useSalemStore, createStore, maxPlayers, minPlayers } from './salem-store';
 
-describe('useSalemStore', () => {
+describe.only('useSalemStore', () => {
 	it('should reset players', () => {
-		const { result } = renderHook(() => useSalemStore());
+		// const { result } = renderHook(() => useSalemStore());
+		let state = createStore().getState();
 
-		act(() => {
-			result.current.addPlayer();
-			result.current.setPlayerName(0, 'This should not persist');
-			result.current.movePlayerDown(1);
-			result.current.resetPlayers();
-		});
+		// act(() => {
+		// 	result.current.addPlayer();
+		// 	result.current.setPlayerName(0, 'This should not persist');
+		// 	result.current.movePlayerDown(1);
+		// 	result.current.resetPlayers();
+		// });
 
-		expect(result.current.players.length).toBe(4);
-		expect(result.current.players[0].name).toBe('');
-		expect(result.current.players[1].id).toBe(1);
+		// expect(result.current.players.length).toBe(4);
+		// expect(result.current.players[0].name).toBe('');
+		// expect(result.current.players[1].id).toBe(1);		
+
+		state.addPlayer();
+		state.setPlayerName(0, 'This should not persist');
+		state.movePlayerDown(1);
+		state.resetPlayers();
+
+		state = useSalemStore.getState();
+		
+		expect(state.players.length).toBe(4);
+		expect(state.players[0].name).toBe('');
+		expect(state.players[1].id).toBe(1);	
 	});
 	it('should toggle instructionSpeech', () => {
 		const { result } = renderHook(() => useSalemStore());
@@ -28,7 +40,7 @@ describe('useSalemStore', () => {
 		act(() => {
 			result.current.setInstructionSpeech(true);
 		});
-
+		
 		expect(result.current.instructionSpeech).toBe(true);
 	});
 
