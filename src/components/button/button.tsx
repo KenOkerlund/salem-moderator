@@ -46,9 +46,10 @@ function Button(props: ButtonProps) {
 
 	const handleMouseDown = () => {
 		setIsHeld(true);
-		holdDuration && (holdTimeoutRef.current = window.setTimeout(() => {
-			onClick && onClick();
-		}, holdDuration * 1000));
+		holdDuration &&
+			(holdTimeoutRef.current = window.setTimeout(() => {
+				onClick && onClick();
+			}, holdDuration * 1000));
 	};
 
 	const handleMouseUp = () => {

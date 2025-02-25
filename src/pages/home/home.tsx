@@ -14,28 +14,17 @@ function Home() {
 
 	return (
 		<div className={styles.home}>
-			<PageBackgroundImage
-				image={catEyes}
-				shrink
-			/>
+			<PageBackgroundImage image={catEyes} shrink />
 			<div className={styles.container}>
 				<img
 					src={ModeratorLogo}
-					alt='Salem Moderator logo'
+					alt="Salem Moderator logo"
 					className={styles.logo}
 				/>
 
-				<img
-					src={highlightedPerson}
-					alt='Lady'
-					className={styles.person}
-				/>
+				<img src={highlightedPerson} alt="Lady" className={styles.person} />
 
-				<Button
-					width={100}
-					size='large'
-					onClick={() => navigate('/settings/')}
-				>
+				<Button width={100} size="large" onClick={() => navigate('/settings/')}>
 					BEGIN
 				</Button>
 				{/* <Button variation='secondary'>SYNC DEVICE</Button> */}

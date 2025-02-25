@@ -4,7 +4,7 @@ import styles from './footer.module.css';
 
 type FooterProps = {
 	autoLeft?: boolean;
-	onPrimaryClick?:  () => void;
+	onPrimaryClick?: () => void;
 	primaryButtonText?: string | null;
 	onSecondaryClick?: () => void;
 	secondaryButtonText?: string | null;
@@ -26,10 +26,16 @@ export function Footer(props: FooterProps) {
 	return (
 		<footer className={classes}>
 			{primaryButtonText && (
-				<Button disabled={!onPrimaryClick} onClick={onPrimaryClick}>{primaryButtonText}</Button>
+				<Button disabled={!onPrimaryClick} onClick={onPrimaryClick}>
+					{primaryButtonText}
+				</Button>
 			)}
 			{secondaryButtonText && (
-				<Button disabled={!onSecondaryClick} onClick={onSecondaryClick} variation='secondary'>
+				<Button
+					disabled={!onSecondaryClick}
+					onClick={onSecondaryClick}
+					variation="secondary"
+				>
 					{secondaryButtonText}
 				</Button>
 			)}

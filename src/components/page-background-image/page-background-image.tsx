@@ -17,11 +17,7 @@ export default function PageBackgroundImage(props: PageBackgroundImageProps) {
 
 	return (
 		<div className={styles.container}>
-			<img
-				className={imageClasses}
-				src={image}
-				alt='testing cat eyes'
-			/>
+			<img className={imageClasses} src={image} alt="testing cat eyes" />
 		</div>
 	);
 }

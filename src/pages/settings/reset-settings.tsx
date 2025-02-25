@@ -9,7 +9,7 @@ function ResetSettings() {
 			<h2>RESET SETTINGS</h2>
 			<p>Clears and resets all setttings.</p>
 			<div className={styles.button}>
-				<Button size='small' onClick={resetPlayers}>
+				<Button size="small" onClick={resetPlayers}>
 					Reset Settings
 				</Button>
 			</div>

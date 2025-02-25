@@ -15,7 +15,7 @@ import styles from './selection.module.css';
 import { useSalemStore } from '../../stores/salem-store';
 
 export default function Selection() {
-	const players = useSalemStore(state => state.players);
+	const players = useSalemStore((state) => state.players);
 	const {
 		phase,
 		setPhase,
@@ -45,19 +45,12 @@ export default function Selection() {
 					<div className={styles.phaseType + ' ' + styles.dawnPhase}>
 						<h1 className={styles.header}>Dawn</h1>
 						<p className={styles.instructions}>
-							The witches select a player to receive the black
-							cat.
+							The witches select a player to receive the black cat.
 						</p>
 						<div>
-							<Button
-								size='small'
-								onClick={() => setPhase('dawn')}
-							>
+							<Button size="small" onClick={() => setPhase('dawn')}>
 								Begin
-								<img
-									src={arrowButton}
-									className={styles.arrowIcon}
-								/>
+								<img src={arrowButton} className={styles.arrowIcon} />
 							</Button>
 						</div>
 					</div>
@@ -66,32 +59,28 @@ export default function Selection() {
 
 					<div className={styles.phaseType + ' ' + styles.nightPhase}>
 						<h1 className={styles.header}>Night</h1>
-						<p className={styles.instructions}>The witches select a player they wish to kill.</p>
+						<p className={styles.instructions}>
+							The witches select a player they wish to kill.
+						</p>
 						<p className={styles.instructions}>
 							The constable selects a player to attempt to save.
 						</p>
 						<div>
-							<Button
-								size='small'
-								onClick={() => setPhase('night')}
-							>
+							<Button size="small" onClick={() => setPhase('night')}>
 								Begin
-								<img
-									src={arrowButton}
-									className={styles.arrowIcon}
-								/>
+								<img src={arrowButton} className={styles.arrowIcon} />
 							</Button>
 						</div>
 						<div className={styles.constable}>
 							<input
-								type='checkbox'
-								id='constable'
-								value='constable'
-								name='constable'
+								type="checkbox"
+								id="constable"
+								value="constable"
+								name="constable"
 								checked={isConstableChecked}
 								onChange={handleChangeConstableChecked}
 							/>
-							<label htmlFor='constable'>Constable</label>
+							<label htmlFor="constable">Constable</label>
 						</div>
 					</div>
 				</div>
@@ -104,9 +93,7 @@ export default function Selection() {
 					/>
 					<div
 						className={`${
-							phase === 'dawn'
-								? styles.dawnBackground
-								: styles.nightBackground
+							phase === 'dawn' ? styles.dawnBackground : styles.nightBackground
 						} ${styles.selectionPage}`}
 					>
 						<h2 className={styles.phaseTitle}>
@@ -114,9 +101,7 @@ export default function Selection() {
 						</h2>
 						<div className={styles.audienceAndInstructions}>
 							<h4 className={styles.audience}>{audience}</h4>
-							<p className={styles.instructions}>
-								{instructionalText}
-							</p>
+							<p className={styles.instructions}>{instructionalText}</p>
 						</div>
 						{stage === 'player-selection' && (
 							<div className={styles.playerSelectionButtons}>
@@ -125,11 +110,7 @@ export default function Selection() {
 										<Button
 											key={player.id}
 											onClick={() => setPlayer(player)}
-											size={
-												isSmallScreen
-													? 'large'
-													: 'largest'
-											}
+											size={isSmallScreen ? 'large' : 'largest'}
 											holdDuration={1.5}
 											width={100}
 										>
@@ -143,19 +124,17 @@ export default function Selection() {
 							<div>
 								<Button
 									onClick={allowReveal}
-									size='largest'
+									size="largest"
 									disabled={!!playerToReveal}
 									holdDuration={1.5}
 								>
-									{playerToReveal
-										? formatPlayerName(playerToReveal)
-										: 'Reveal'}
+									{playerToReveal ? formatPlayerName(playerToReveal) : 'Reveal'}
 								</Button>
 							</div>
 						)}
 					</div>
 					<Footer
-						primaryButtonText='Abort'
+						primaryButtonText="Abort"
 						onPrimaryClick={reset}
 						secondaryButtonText={next ? 'Next' : undefined}
 						onSecondaryClick={next ? next : undefined}

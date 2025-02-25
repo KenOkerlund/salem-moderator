@@ -4,7 +4,6 @@ import Settings from './pages/settings';
 import Selection from './pages/selection';
 import styles from './app.module.css';
 
-
 export default function App() {
 	return (
 		<main className={styles.main}>
@@ -12,7 +11,7 @@ export default function App() {
 				<Routes>
 					<Route index element={<Home />} />
 					<Route path="/settings" element={<Settings />} />
-					<Route path='/selection' element={<Selection />} />
+					<Route path="/selection" element={<Selection />} />
 				</Routes>
 			</BrowserRouter>
 		</main>

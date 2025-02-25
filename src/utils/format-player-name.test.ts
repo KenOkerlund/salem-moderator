@@ -23,4 +23,3 @@ describe('formatPlayerName()', () => {
 		expect(formatPlayerName(player)).toBe('Player 1');
 	});
 });
-
