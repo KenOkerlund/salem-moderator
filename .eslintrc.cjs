@@ -3,12 +3,12 @@ module.exports = {
 	env: {
 		browser: true,
 		es2020: true,
-		"vitest-globals/env": true
+		'vitest-globals/env': true,
 	},
 	settings: {
 		react: {
-			version: "detect"
-		}
+			version: 'detect',
+		},
 	},
 	extends: [
 		'eslint:recommended',
@@ -16,7 +16,7 @@ module.exports = {
 		'plugin:react/recommended',
 		'plugin:react/jsx-runtime',
 		'plugin:react-hooks/recommended',
-		"plugin:vitest-globals/recommended",
+		'plugin:vitest-globals/recommended',
 	],
 	ignorePatterns: ['dist', '.eslintrc.cjs'],
 	parser: '@typescript-eslint/parser',
@@ -26,24 +26,28 @@ module.exports = {
 			'warn',
 			{ allowConstantExport: true },
 		],
-		indent: ['error', 'tab'],
-		quotes: ['error', 'single', {'avoidEscape': true}],
-		'linebreak-style': ['error', process.platform === 'win32' ? 'windows' : 'unix'],
+		// If this is enabled it will conflict with prettier
+		// indent: ['error', 'tab'],
+		quotes: ['error', 'single', { avoidEscape: true }],
+		'linebreak-style': [
+			'error',
+			process.platform === 'win32' ? 'windows' : 'unix',
+		],
 		semi: ['error', 'always'],
-		"comma-dangle": [
+		'comma-dangle': [
 			'error',
 			{
-				arrays: "always-multiline",
-				objects: "always-multiline",
-				imports: "always-multiline",
-				exports: "always-multiline",
-				functions: "always-multiline"
-			}
+				arrays: 'always-multiline',
+				objects: 'always-multiline',
+				imports: 'always-multiline',
+				exports: 'always-multiline',
+				functions: 'always-multiline',
+			},
 		],
-		"eol-last": ["error", "always"],
-		"object-curly-spacing": ["error", "always"],
-		"array-bracket-spacing": ["error", "never"],
-		"comma-spacing": ["error", { "after": true, "before": false }],
-		"no-unneeded-ternary": "error",
+		'eol-last': ['error', 'always'],
+		'object-curly-spacing': ['error', 'always'],
+		'array-bracket-spacing': ['error', 'never'],
+		'comma-spacing': ['error', { after: true, before: false }],
+		'no-unneeded-ternary': 'error',
 	},
-}
+};

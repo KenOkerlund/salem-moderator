@@ -1,18 +1,18 @@
 .players {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    gap: 12px;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	gap: 12px;
 }
 
 .playerNames {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
 }
 
 .playerName {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+	display: flex;
+	align-items: center;
+	gap: 12px;
 }

@@ -29,12 +29,12 @@
 
 .dawnPhase {
 	margin-right: auto;
-	margin-left: max((100vw - 377px) * .2, 0px);
+	margin-left: max((100vw - 377px) * 0.2, 0px);
 }
 
 .nightPhase {
 	margin-left: auto;
-	margin-right: max((100vw - 377px) * .2, 0px);
+	margin-right: max((100vw - 377px) * 0.2, 0px);
 }
 
 .header {
@@ -51,8 +51,8 @@
 	font-family: IM FELL English SC;
 	font-size: 18px;
 	letter-spacing: 2px;
-	color: #F1ECCB;
-	accent-color: #3C7429;
+	color: #f1eccb;
+	accent-color: #3c7429;
 	text-transform: lowercase;
 }
 
@@ -65,7 +65,6 @@
 	overflow: hidden;
 	padding: 0px 5px 40px;
 }
-
 
 .phaseTitle {
 	font-size: 80px;
@@ -116,7 +115,7 @@
 	grid-template-columns: 1fr 1fr;
 }
 
-@media(max-width: 600px){
+@media (max-width: 600px) {
 	.playerSelectionButtons {
 		grid-template-columns: 1fr;
 	}
