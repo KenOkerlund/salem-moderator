@@ -41,7 +41,7 @@ function Settings() {
 				onPrimaryClick={() => navigate('/selection')}
 				primaryButtonText="Play"
 				onSecondaryClick={() => navigate('/')}
-				secondaryButtonText="Quit"
+				secondaryButtonText="Return Home"
 			/>
 		</>
 	);
