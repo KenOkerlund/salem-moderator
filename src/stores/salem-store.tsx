@@ -7,11 +7,13 @@ type SalemState = {
 	setInstructionSpeech: (enabled: boolean) => void;
 	players: Player[];
 	setPlayerName: (playerId: number, name: string) => void;
-	resetPlayers: () => void;
+	resetSettings: () => void;
 	addPlayer: () => void;
 	removePlayer: (playerId: number) => void;
 	movePlayerDown: (playerId: number) => void;
 	movePlayerUp: (playerId: number) => void;
+	isConstableChecked: boolean;
+	setIsConstableChecked: (constableChecked: boolean) => void;
 };
 
 export const maxPlayers = 12;
@@ -56,8 +58,8 @@ export const useSalemStore = create<SalemState>()(
 					}
 					return { players };
 				}),
-			resetPlayers: () => {
-				set(() => ({ players: createPlayers() }));
+			resetSettings: () => {
+				set(() => ({ players: createPlayers(), instructionSpeech: true, isConstableChecked: true }));
 			},
 			addPlayer: () =>
 				set((state) => {
@@ -94,6 +96,9 @@ export const useSalemStore = create<SalemState>()(
 					copyPlayers.splice(playerIndex - 1, 0, elementMoving[0]);
 					return { players: copyPlayers };
 				}),
+				isConstableChecked: true,
+				setIsConstableChecked: (constableChecked) =>
+				set(() => ({ isConstableChecked: constableChecked })),
 		}),
 		{
 			name: 'salem_storage',
