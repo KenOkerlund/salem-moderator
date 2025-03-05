@@ -50,7 +50,7 @@ describe('useSalemStore', () => {
 		});
 
 		expect(result.current.players.length).toBe(5);
-		expect(result.current.players[4]).toMatchObject({ id:4, name:'' });
+		expect(result.current.players[4]).toMatchObject({ id: 4, name: '' });
 	});
 
 	it('should not add more than max players', () => {
@@ -102,7 +102,7 @@ describe('useSalemStore', () => {
 		act(() => {
 			result.current.movePlayerDown(3);
 		});
-// console.log(result.current.players);
+		// console.log(result.current.players);
 
 		expect(result.current.players[3].id).toBe(3);
 	});
