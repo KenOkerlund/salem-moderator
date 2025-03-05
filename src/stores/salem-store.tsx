@@ -53,7 +53,7 @@ export const createStore = () => {
 							(player) => player.id === playerId,
 						);
 						if (playerIndex >= 0) {
-							players[playerIndex].name = name;
+							players[playerIndex] = { ...players[playerIndex], name };
 						}
 						return { players };
 					}),
