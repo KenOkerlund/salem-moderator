@@ -59,8 +59,12 @@ export const createStore = () => {
 						}
 						return { players };
 					}),
-				resetPlayers: () => {
-					set(() => ({ players: createPlayers() }));
+				resetSettings: () => {
+					set(() => ({
+						players: createPlayers(),
+						instructionSpeech: true,
+						isConstableChecked: true,
+					}));
 				},
 				addPlayer: () =>
 					set((state) => {
@@ -97,6 +101,9 @@ export const createStore = () => {
 						copyPlayers.splice(playerIndex - 1, 0, elementMoving[0]);
 						return { players: copyPlayers };
 					}),
+				isConstableChecked: true,
+				setIsConstableChecked: (constableChecked) =>
+					set(() => ({ isConstableChecked: constableChecked })),
 			}),
 			{
 				name: 'salem_storage',
