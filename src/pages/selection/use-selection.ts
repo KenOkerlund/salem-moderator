@@ -26,10 +26,10 @@ export function useSelection() {
 
 	const [witchesSelection, setWitchesSelection] = useState<Player>();
 	const [constableSelection, setConstableSelection] = useState<Player>();
-	const [isConstableChecked, setIsConstableChecked] = useState(true);
 	const [isRevealing, setIsRevealing] = useState(false);
 
 	const instructionSpeech = useSalemStore((state) => state.instructionSpeech);
+	const isConstableChecked = useSalemStore((state) => state.isConstableChecked);
 
 	const reset = () => {
 		setPhase(undefined);
@@ -163,10 +163,6 @@ export function useSelection() {
 		},
 	];
 
-	const handleChangeConstableChecked = () => {
-		setIsConstableChecked((prevState) => !prevState);
-	};
-
 	const allowReveal = () => setIsRevealing(true);
 
 	const currentStep = phase === 'dawn' ? dawnSteps[step] : nightSteps[step];
@@ -200,7 +196,6 @@ export function useSelection() {
 		phase,
 		setPhase,
 		isConstableChecked,
-		handleChangeConstableChecked,
 		allowReveal,
 		reset,
 		...currentStep,
