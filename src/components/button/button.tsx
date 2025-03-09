@@ -95,7 +95,6 @@ function Button(props: ButtonProps) {
 			onMouseLeave={endHold}
 			onDragLeave={endHold}
 			onTouchStart={startHold}
-			onTouchMove={endHold}
 			onTouchEnd={endHold}
 			className={classes}
 			onClick={!holdDuration ? onClick : undefined}
