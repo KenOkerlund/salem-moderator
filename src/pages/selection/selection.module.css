@@ -115,6 +115,16 @@
 	grid-template-columns: 1fr 1fr;
 }
 
+.soundBars {
+	flex: 1;
+	display: flex;
+	align-items: center;
+}
+
+.remainingTime {
+	font-size: 48px;
+}
+
 @media (max-width: 600px) {
 	.playerSelectionButtons {
 		grid-template-columns: 1fr;
