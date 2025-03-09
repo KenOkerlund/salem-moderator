@@ -17,7 +17,9 @@ import { useSalemStore } from '../../stores/salem-store';
 export default function Selection() {
 	const players = useSalemStore((state) => state.players);
 	const isConstableChecked = useSalemStore((state) => state.isConstableChecked);
-	const setIsConstableChecked = useSalemStore((state) => state.setIsConstableChecked);
+	const setIsConstableChecked = useSalemStore(
+		(state) => state.setIsConstableChecked,
+	);
 	const {
 		phase,
 		setPhase,
