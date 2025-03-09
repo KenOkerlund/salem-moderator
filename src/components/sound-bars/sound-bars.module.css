@@ -1,0 +1,45 @@
+.soundBarsContainer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 8px; /* Space between the bars */
+	padding: 20px;
+	height: 100px;
+	width: 150px;
+}
+
+.soundBar {
+	width: 10px; /* Width of each bar */
+	height: 40px; /* Base height of the bars */
+	background-color: transparent;
+	border: 2px solid #f1eccb; /* Light gray border to match the image */
+	border-radius: 5px; /* Rounded ends */
+	animation: soundWave 1s infinite ease-in-out; /* Animation for the bars */
+}
+
+/* Different base heights for each bar to match the image */
+.soundBar:nth-child(1) {
+	height: 30px;
+}
+.soundBar:nth-child(2) {
+	height: 50px;
+}
+.soundBar:nth-child(3) {
+	height: 40px;
+}
+.soundBar:nth-child(4) {
+	height: 20px;
+}
+
+/* Animation to make the bars "pulse" */
+@keyframes soundWave {
+	0% {
+		transform: scaleY(1); /* Original height */
+	}
+	50% {
+		transform: scaleY(1.5); /* Stretch taller */
+	}
+	100% {
+		transform: scaleY(1); /* Back to original height */
+	}
+}
