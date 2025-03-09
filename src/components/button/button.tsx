@@ -44,31 +44,45 @@ function Button(props: ButtonProps) {
 		[styles.holdAnimation]: holdDuration && isHeld,
 	});
 
-	const handleMouseDown = () => {
-		setIsHeld(true);
+	const resetHover = () => {
+		if (!buttonRef.current) return;
+		buttonRef.current.style.backgroundColor = 'transparent';
+	};
+
+	useEffect(() => {
+		const currentButton = buttonRef.current;
+
+		const handleTouchEnd = () => {
+			resetHover();
+		};
+		const preventContextMenu = (e: MouseEvent) => {
+			e.preventDefault();
+		};
+
+		currentButton?.addEventListener('touchend', handleTouchEnd, {
+			passive: true,
+		});
+
+		currentButton?.addEventListener('contextmenu', preventContextMenu);
+
+		return () => {
+			currentButton?.removeEventListener('touchend', handleTouchEnd);
+			currentButton?.removeEventListener('contextmenu', preventContextMenu);
+		};
+	}, []);
+
+	const startHold = () => {
+		!disabled && setIsHeld(true);
 		holdDuration &&
 			(holdTimeoutRef.current = window.setTimeout(() => {
 				onClick && onClick();
 			}, holdDuration * 1000));
 	};
 
-	const handleMouseUp = () => {
+	const endHold = () => {
 		setIsHeld(false);
 		holdTimeoutRef.current && clearTimeout(holdTimeoutRef.current);
 	};
-
-	useEffect(() => {
-		const currentRef = buttonRef.current;
-		const preventContextMenu = (e: MouseEvent) => {
-			e.preventDefault();
-		};
-
-		currentRef?.addEventListener('contextmenu', preventContextMenu);
-
-		return () => {
-			currentRef?.removeEventListener('contextmenu', preventContextMenu);
-		};
-	}, [buttonRef]);
 
 	return (
 		<button
@@ -76,13 +90,12 @@ function Button(props: ButtonProps) {
 			style={{
 				animationDuration: holdDuration ? `${holdDuration}s` : undefined,
 			}}
-			onMouseDown={handleMouseDown}
-			onMouseUp={handleMouseUp}
-			onMouseLeave={handleMouseUp}
-			onDragLeave={handleMouseUp}
-			onTouchStart={handleMouseDown}
-			onTouchMove={handleMouseUp}
-			onTouchEnd={handleMouseUp}
+			onMouseDown={startHold}
+			onMouseUp={endHold}
+			onMouseLeave={endHold}
+			onDragLeave={endHold}
+			onTouchStart={startHold}
+			onTouchEnd={endHold}
 			className={classes}
 			onClick={!holdDuration ? onClick : undefined}
 			disabled={disabled}

@@ -16,11 +16,13 @@ import { useSalemStore } from '../../stores/salem-store';
 
 export default function Selection() {
 	const players = useSalemStore((state) => state.players);
+	const isConstableChecked = useSalemStore((state) => state.isConstableChecked);
+	const setIsConstableChecked = useSalemStore(
+		(state) => state.setIsConstableChecked,
+	);
 	const {
 		phase,
 		setPhase,
-		isConstableChecked,
-		handleChangeConstableChecked,
 		instructionalText,
 		audience,
 		setPlayer,
@@ -78,7 +80,7 @@ export default function Selection() {
 								value="constable"
 								name="constable"
 								checked={isConstableChecked}
-								onChange={handleChangeConstableChecked}
+								onChange={() => setIsConstableChecked(!isConstableChecked)}
 							/>
 							<label htmlFor="constable">Constable</label>
 						</div>

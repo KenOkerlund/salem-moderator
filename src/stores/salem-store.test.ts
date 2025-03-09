@@ -9,7 +9,7 @@ describe('useSalemStore', () => {
 			result.current.addPlayer();
 			result.current.setPlayerName(0, 'This should not persist');
 			result.current.movePlayerDown(1);
-			result.current.resetPlayers();
+			result.current.resetSettings();
 		});
 
 		expect(result.current.players.length).toBe(4);
