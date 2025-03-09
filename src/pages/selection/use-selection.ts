@@ -107,7 +107,7 @@ export function useSelection() {
 		},
 	];
 
-	const unfilteredNighSteps: Step[] = [
+	const unfilteredNightSteps: Step[] = [
 		{
 			stage: 'vocal-instruction',
 			audience: 'Players',
@@ -225,7 +225,7 @@ export function useSelection() {
 		},
 	];
 
-	const nightSteps = unfilteredNighSteps.filter((step) => {
+	const nightSteps = unfilteredNightSteps.filter((step) => {
 		if (!isConstableChecked && step.filterIfNoConstable) {
 			return false;
 		}
