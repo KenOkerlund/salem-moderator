@@ -1,10 +1,12 @@
 import { useMediaQuery } from 'react-responsive';
+import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 import { useSelection } from './use-selection';
 import { formatPlayerName } from '../../utils/format-player-name';
 import { Footer } from '../shared-components/footer/footer';
 import PageBackgroundImage from '../../components/page-background-image/page-background-image';
 import Button from '../../components/button/button';
 import SettingsButton from '../shared-components/settings-button/settings-button';
+import SoundBars from '../../components/sound-bars/sound-bars';
 
 import arrowButton from '../../assets/svg-icons/arrow.svg';
 import graveRobberImage from '../../assets/images/grave-robber.png';
@@ -17,6 +19,7 @@ import { useSalemStore } from '../../stores/salem-store';
 export default function Selection() {
 	const players = useSalemStore((state) => state.players);
 	const isConstableChecked = useSalemStore((state) => state.isConstableChecked);
+	const instructionSpeech = useSalemStore((state) => state.instructionSpeech);
 	const setIsConstableChecked = useSalemStore(
 		(state) => state.setIsConstableChecked,
 	);
@@ -31,11 +34,28 @@ export default function Selection() {
 		allowReveal,
 		next,
 		reset,
+		noVoiceAutoNextTiming,
 	} = useSelection();
 
 	const isSmallScreen = useMediaQuery({
 		query: '(max-width: 600px)',
 	});
+
+	const NoVocalCountdown = () => (
+		<CountdownCircleTimer
+			isPlaying
+			duration={noVoiceAutoNextTiming || 0}
+			colors={'#f1eccb'}
+			trailColor={'#e1ddc024'}
+			strokeWidth={4}
+			trailStrokeWidth={2}
+			size={120}
+		>
+			{({ remainingTime }) => (
+				<span className={styles.remainingTime}>{remainingTime}</span>
+			)}
+		</CountdownCircleTimer>
+	);
 
 	return (
 		<>
@@ -132,6 +152,12 @@ export default function Selection() {
 								>
 									{playerToReveal ? formatPlayerName(playerToReveal) : 'Reveal'}
 								</Button>
+							</div>
+						)}
+						{stage === 'vocal-instruction' && (
+							<div className={styles.soundBars}>
+								{instructionSpeech && <SoundBars />}
+								{!instructionSpeech && <NoVocalCountdown />}
 							</div>
 						)}
 					</div>
