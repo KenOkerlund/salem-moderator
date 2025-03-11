@@ -14,6 +14,8 @@ type SalemState = {
 	movePlayerUp: (playerId: number) => void;
 	isConstableChecked: boolean;
 	setIsConstableChecked: (constableChecked: boolean) => void;
+	phase: 'dawn' | 'night' | undefined;
+	setPhase: (phase: 'dawn' | 'night' | undefined) => void;
 };
 
 export const maxPlayers = 12;
@@ -104,6 +106,8 @@ export const createStore = () => {
 				isConstableChecked: true,
 				setIsConstableChecked: (constableChecked) =>
 					set(() => ({ isConstableChecked: constableChecked })),
+				phase: undefined,
+				setPhase: (phase) => set(() => ({ phase: phase })),
 			}),
 			{
 				name: 'salem_storage',

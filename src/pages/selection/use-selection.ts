@@ -22,7 +22,8 @@ const voice = window.speechSynthesis.getVoices()[1];
 let speechDelayTimer: number | undefined = undefined;
 
 export function useSelection() {
-	const [phase, setPhase] = useState<'dawn' | 'night'>();
+	const phase = useSalemStore((state) => state.phase);
+	const setPhase = useSalemStore((state) => state.setPhase);
 	const [step, setStep] = useState<number>(0);
 
 	const [witchesSelection, setWitchesSelection] = useState<Player>();
