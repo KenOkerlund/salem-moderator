@@ -24,7 +24,8 @@ let speechDelayTimer: number | undefined = undefined;
 export function useSelection() {
 	const phase = useSalemStore((state) => state.phase);
 	const setPhase = useSalemStore((state) => state.setPhase);
-	const [step, setStep] = useState<number>(0);
+	const step = useSalemStore((state) => state.step);
+	const setStep = useSalemStore((state)=> state.setStep);
 
 	const [witchesSelection, setWitchesSelection] = useState<Player>();
 	const [constableSelection, setConstableSelection] = useState<Player>();

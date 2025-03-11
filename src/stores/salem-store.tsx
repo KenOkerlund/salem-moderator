@@ -16,6 +16,8 @@ type SalemState = {
 	setIsConstableChecked: (constableChecked: boolean) => void;
 	phase: 'dawn' | 'night' | undefined;
 	setPhase: (phase: 'dawn' | 'night' | undefined) => void;
+	step: number;
+	setStep: (stepNumber: number) => void;
 };
 
 export const maxPlayers = 12;
@@ -108,6 +110,8 @@ export const createStore = () => {
 					set(() => ({ isConstableChecked: constableChecked })),
 				phase: undefined,
 				setPhase: (phase) => set(() => ({ phase: phase })),
+				step: 0,
+				setStep: (stepNumber) => set(() => ({ step: stepNumber })),
 			}),
 			{
 				name: 'salem_storage',
