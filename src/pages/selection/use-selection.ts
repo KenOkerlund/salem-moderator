@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import { useSalemStore } from '../../stores/salem-store';
 
@@ -26,10 +26,13 @@ export function useSelection() {
 	const setPhase = useSalemStore((state) => state.setPhase);
 	const step = useSalemStore((state) => state.step);
 	const setStep = useSalemStore((state)=> state.setStep);
+	const isRevealing = useSalemStore((state) => state.isRevealing);
+	const setIsRevealing = useSalemStore((state) => state.setIsRevealing);
 
-	const [witchesSelection, setWitchesSelection] = useState<Player>();
-	const [constableSelection, setConstableSelection] = useState<Player>();
-	const [isRevealing, setIsRevealing] = useState(false);
+	const witchesSelection = useSalemStore((state) => state.witchesSelection);
+	const setWitchesSelection = useSalemStore((state) => state.setWitchesSelection);
+	const constableSelection = useSalemStore((state) => state.constableSelection);
+	const setConstableSelection = useSalemStore((state) => state.setConstableSelection);
 
 	const instructionSpeech = useSalemStore((state) => state.instructionSpeech);
 	const isConstableChecked = useSalemStore((state) => state.isConstableChecked);

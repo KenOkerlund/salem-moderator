@@ -18,6 +18,12 @@ type SalemState = {
 	setPhase: (phase: 'dawn' | 'night' | undefined) => void;
 	step: number;
 	setStep: (stepNumber: number) => void;
+	witchesSelection: Player | undefined;
+	setWitchesSelection: (player: Player | undefined) => void;
+	constableSelection: Player | undefined;
+	setConstableSelection: (player: Player | undefined) => void;
+	isRevealing: boolean;
+	setIsRevealing: (isRevealingBool: boolean) => void;
 };
 
 export const maxPlayers = 12;
@@ -112,6 +118,15 @@ export const createStore = () => {
 				setPhase: (phase) => set(() => ({ phase: phase })),
 				step: 0,
 				setStep: (stepNumber) => set(() => ({ step: stepNumber })),
+				witchesSelection: undefined,
+				setWitchesSelection: (player) =>
+					set(() => ({ witchesSelection: player })),
+				constableSelection: undefined,
+				setConstableSelection: (player) =>
+					set(() => ({ constableSelection: player })),
+				isRevealing: false,
+				setIsRevealing: (isRevealingBool) =>
+					set(() => ({ isRevealing: isRevealingBool })),
 			}),
 			{
 				name: 'salem_storage',
