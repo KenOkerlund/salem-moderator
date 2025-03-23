@@ -14,6 +14,17 @@ type SalemState = {
 	movePlayerUp: (playerId: number) => void;
 	isConstableChecked: boolean;
 	setIsConstableChecked: (constableChecked: boolean) => void;
+	phase: 'dawn' | 'night' | undefined;
+	setPhase: (phase: 'dawn' | 'night' | undefined) => void;
+	step: number;
+	setStep: (stepNumber: number) => void;
+	witchesSelection: Player | undefined;
+	setWitchesSelection: (player: Player | undefined) => void;
+	constableSelection: Player | undefined;
+	setConstableSelection: (player: Player | undefined) => void;
+	isRevealing: boolean;
+	setIsRevealing: (isRevealingBool: boolean) => void;
+	resetSelectionProcess: () => void;
 };
 
 export const maxPlayers = 12;
@@ -104,6 +115,27 @@ export const createStore = () => {
 				isConstableChecked: true,
 				setIsConstableChecked: (constableChecked) =>
 					set(() => ({ isConstableChecked: constableChecked })),
+				phase: undefined,
+				setPhase: (phase) => set(() => ({ phase: phase })),
+				step: 0,
+				setStep: (stepNumber) => set(() => ({ step: stepNumber })),
+				witchesSelection: undefined,
+				setWitchesSelection: (player) =>
+					set(() => ({ witchesSelection: player })),
+				constableSelection: undefined,
+				setConstableSelection: (player) =>
+					set(() => ({ constableSelection: player })),
+				isRevealing: false,
+				setIsRevealing: (isRevealingBool) =>
+					set(() => ({ isRevealing: isRevealingBool })),
+				resetSelectionProcess: () =>
+					set(() => ({
+						phase: undefined,
+						step: 0,
+						witchesSelection: undefined,
+						constableSelection: undefined,
+						isRevealing: false,
+					})),
 			}),
 			{
 				name: 'salem_storage',

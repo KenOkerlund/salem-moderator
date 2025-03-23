@@ -18,22 +18,24 @@ import { useSalemStore } from '../../stores/salem-store';
 
 export default function Selection() {
 	const players = useSalemStore((state) => state.players);
+	const phase = useSalemStore((state) => state.phase);
+	const setPhase = useSalemStore((state) => state.setPhase);
 	const isConstableChecked = useSalemStore((state) => state.isConstableChecked);
 	const instructionSpeech = useSalemStore((state) => state.instructionSpeech);
 	const setIsConstableChecked = useSalemStore(
 		(state) => state.setIsConstableChecked,
 	);
+	const resetSelectionProcess = useSalemStore(
+		(state) => state.resetSelectionProcess,
+	);
+	const setIsRevealing = useSalemStore((state) => state.setIsRevealing);
 	const {
-		phase,
-		setPhase,
 		instructionalText,
 		audience,
 		setPlayer,
 		stage,
 		playerToReveal,
-		allowReveal,
 		next,
-		reset,
 		noVoiceAutoNextTiming,
 	} = useSelection();
 
@@ -145,7 +147,7 @@ export default function Selection() {
 						{stage === 'reveal' && (
 							<div>
 								<Button
-									onClick={allowReveal}
+									onClick={() => setIsRevealing(true)}
 									size="largest"
 									disabled={!!playerToReveal}
 									holdDuration={1.5}
@@ -163,7 +165,7 @@ export default function Selection() {
 					</div>
 					<Footer
 						primaryButtonText="Abort"
-						onPrimaryClick={reset}
+						onPrimaryClick={resetSelectionProcess}
 						secondaryButtonText={next ? 'Next' : undefined}
 						onSecondaryClick={next ? next : undefined}
 					/>

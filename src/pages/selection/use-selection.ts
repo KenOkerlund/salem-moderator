@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import { useSalemStore } from '../../stores/salem-store';
 
@@ -22,23 +22,26 @@ const voice = window.speechSynthesis.getVoices()[1];
 let speechDelayTimer: number | undefined = undefined;
 
 export function useSelection() {
-	const [phase, setPhase] = useState<'dawn' | 'night'>();
-	const [step, setStep] = useState<number>(0);
+	const phase = useSalemStore((state) => state.phase);
+	const step = useSalemStore((state) => state.step);
+	const setStep = useSalemStore((state) => state.setStep);
+	const isRevealing = useSalemStore((state) => state.isRevealing);
+	const setIsRevealing = useSalemStore((state) => state.setIsRevealing);
 
-	const [witchesSelection, setWitchesSelection] = useState<Player>();
-	const [constableSelection, setConstableSelection] = useState<Player>();
-	const [isRevealing, setIsRevealing] = useState(false);
+	const witchesSelection = useSalemStore((state) => state.witchesSelection);
+	const setWitchesSelection = useSalemStore(
+		(state) => state.setWitchesSelection,
+	);
+	const constableSelection = useSalemStore((state) => state.constableSelection);
+	const setConstableSelection = useSalemStore(
+		(state) => state.setConstableSelection,
+	);
 
 	const instructionSpeech = useSalemStore((state) => state.instructionSpeech);
 	const isConstableChecked = useSalemStore((state) => state.isConstableChecked);
-
-	const reset = () => {
-		setPhase(undefined);
-		setStep(0);
-		setWitchesSelection(undefined);
-		setConstableSelection(undefined);
-		setIsRevealing(false);
-	};
+	const resetSelectionProcess = useSalemStore(
+		(state) => state.resetSelectionProcess,
+	);
 
 	const nextStep = () => setStep(step + 1);
 
@@ -103,7 +106,7 @@ export function useSelection() {
 			instructionalText: 'Reveal the player who was given the Black Cat.',
 			setPlayer: () => {},
 			playerToReveal: isRevealing ? witchesSelection : null,
-			next: isRevealing ? () => reset() : null,
+			next: isRevealing ? () => resetSelectionProcess() : null,
 		},
 	];
 
@@ -221,7 +224,7 @@ export function useSelection() {
 			instructionalText: 'Reveal the player who was attacked by the Witches.',
 			setPlayer: () => {},
 			playerToReveal: isRevealing ? witchesSelection : null,
-			next: isRevealing ? () => reset() : null,
+			next: isRevealing ? () => resetSelectionProcess() : null,
 		},
 	];
 
@@ -231,8 +234,6 @@ export function useSelection() {
 		}
 		return true;
 	});
-
-	const allowReveal = () => setIsRevealing(true);
 
 	const currentStep = phase === 'dawn' ? dawnSteps[step] : nightSteps[step];
 
@@ -275,11 +276,6 @@ export function useSelection() {
 	}, [phase, currentStep, instructionSpeech]);
 
 	return {
-		phase,
-		setPhase,
-		isConstableChecked,
-		allowReveal,
-		reset,
 		...currentStep,
 	};
 }
