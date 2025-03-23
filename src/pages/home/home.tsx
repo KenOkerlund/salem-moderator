@@ -8,9 +8,19 @@ import ModeratorLogo from '../../assets/images/moderator-logo.svg';
 import catEyes from '../../assets/images/cat-eyesl.png';
 
 import styles from './Home.module.css';
+import { useSalemStore } from '../../stores/salem-store';
 
 function Home() {
 	const navigate = useNavigate();
+
+	const resetSelectionProcess = useSalemStore(
+		(state) => state.resetSelectionProcess,
+	);
+
+	const resetAndNavigate = () => {
+		resetSelectionProcess();
+		navigate('/settings/');
+	};
 
 	return (
 		<div className={styles.home}>
@@ -24,7 +34,7 @@ function Home() {
 
 				<img src={highlightedPerson} alt="Lady" className={styles.person} />
 
-				<Button width={100} size="large" onClick={() => navigate('/settings/')}>
+				<Button width={100} size="large" onClick={() => resetAndNavigate()}>
 					BEGIN
 				</Button>
 				{/* <Button variation='secondary'>SYNC DEVICE</Button> */}

@@ -24,6 +24,7 @@ type SalemState = {
 	setConstableSelection: (player: Player | undefined) => void;
 	isRevealing: boolean;
 	setIsRevealing: (isRevealingBool: boolean) => void;
+	resetSelectionProcess: () => void;
 };
 
 export const maxPlayers = 12;
@@ -127,6 +128,14 @@ export const createStore = () => {
 				isRevealing: false,
 				setIsRevealing: (isRevealingBool) =>
 					set(() => ({ isRevealing: isRevealingBool })),
+				resetSelectionProcess: () =>
+					set(() => ({
+						phase: undefined,
+						step: 0,
+						witchesSelection: undefined,
+						constableSelection: undefined,
+						isRevealing: false,
+					})),
 			}),
 			{
 				name: 'salem_storage',
