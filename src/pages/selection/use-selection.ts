@@ -23,7 +23,6 @@ let speechDelayTimer: number | undefined = undefined;
 
 export function useSelection() {
 	const phase = useSalemStore((state) => state.phase);
-	const setPhase = useSalemStore((state) => state.setPhase);
 	const step = useSalemStore((state) => state.step);
 	const setStep = useSalemStore((state)=> state.setStep);
 	const isRevealing = useSalemStore((state) => state.isRevealing);
@@ -36,14 +35,8 @@ export function useSelection() {
 
 	const instructionSpeech = useSalemStore((state) => state.instructionSpeech);
 	const isConstableChecked = useSalemStore((state) => state.isConstableChecked);
+	const resetSelectionProcess = useSalemStore((state) => state.resetSelectionProcess);
 
-	const reset = () => {
-		setPhase(undefined);
-		setStep(0);
-		setWitchesSelection(undefined);
-		setConstableSelection(undefined);
-		setIsRevealing(false);
-	};
 
 	const nextStep = () => setStep(step + 1);
 
@@ -108,7 +101,7 @@ export function useSelection() {
 			instructionalText: 'Reveal the player who was given the Black Cat.',
 			setPlayer: () => {},
 			playerToReveal: isRevealing ? witchesSelection : null,
-			next: isRevealing ? () => reset() : null,
+			next: isRevealing ? () => resetSelectionProcess() : null,
 		},
 	];
 
@@ -226,7 +219,7 @@ export function useSelection() {
 			instructionalText: 'Reveal the player who was attacked by the Witches.',
 			setPlayer: () => {},
 			playerToReveal: isRevealing ? witchesSelection : null,
-			next: isRevealing ? () => reset() : null,
+			next: isRevealing ? () => resetSelectionProcess() : null,
 		},
 	];
 
@@ -236,8 +229,6 @@ export function useSelection() {
 		}
 		return true;
 	});
-
-	const allowReveal = () => setIsRevealing(true);
 
 	const currentStep = phase === 'dawn' ? dawnSteps[step] : nightSteps[step];
 
@@ -280,11 +271,6 @@ export function useSelection() {
 	}, [phase, currentStep, instructionSpeech]);
 
 	return {
-		phase,
-		setPhase,
-		isConstableChecked,
-		allowReveal,
-		reset,
 		...currentStep,
 	};
 }
