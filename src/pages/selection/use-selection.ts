@@ -231,7 +231,7 @@ export function useSelection() {
 			currentAudio.currentTime = 0;
 		}
 
-		if (phase && currentStep.audioFile) {
+		if (phase && currentStep.audioFile && instructionSpeech) {
 			currentAudio = new Audio(currentStep.audioFile);
 			currentAudio.play();
 			currentAudio.onended = () => {
