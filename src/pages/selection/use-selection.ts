@@ -9,7 +9,7 @@ type Step = {
 	filterIfNoConstable?: true;
 	audience: 'Witches' | 'Players' | 'Constable';
 	instructionalText: string;
-	moderatorSpeech?: string[];
+	audioFile?: string;
 	setPlayer: (player: Player) => void;
 	playerToReveal: null | undefined | Player;
 	next: null | (() => void);
@@ -17,9 +17,16 @@ type Step = {
 	noVoiceAutoNextTiming?: number;
 };
 
-const voice = window.speechSynthesis.getVoices()[1];
+import allCloseEyesAudio from '../../assets/audio/all-close-eyes.mp3';
+import witchesBlackCatSelectionAudio from '../../assets/audio/witches-initial-black-cat-selection.mp3';
+import witchesCompletedSeletionAudio from '../../assets/audio/witches-completed-selection.mp3';
+import allOpenEyesAudio from '../../assets/audio/all-open-eyes.mp3';
+import witchesInitialKillSelectionAudio from '../../assets/audio/witches-initial-kill-selection.mp3';
+import constableInitialProtectionSelectionAudio from '../../assets/audio/constable-initial-protection-selection.mp3';
+import constableCompletedSelectionAudio from '../../assets/audio/constable-completed-selection.mp3';
 
 let speechDelayTimer: number | undefined = undefined;
+let currentAudio: HTMLAudioElement | undefined = undefined;
 
 export function useSelection() {
 	const phase = useSalemStore((state) => state.phase);
@@ -50,10 +57,7 @@ export function useSelection() {
 			stage: 'vocal-instruction',
 			audience: 'Players',
 			instructionalText: 'Close your eyes.',
-			moderatorSpeech: [
-				'All players close your eyes.',
-				"Everyone's eyes should be closed.",
-			],
+			audioFile: allCloseEyesAudio,
 			setPlayer: () => {},
 			playerToReveal: null,
 			autoNext: true,
@@ -65,9 +69,7 @@ export function useSelection() {
 			audience: 'Witches',
 			instructionalText:
 				'Select a player to receive the Black Cat. You may select yourself.',
-			moderatorSpeech: [
-				'If you have, or have ever had a witch card, open your eyes, and choose any player to give the black cat. You may even choose a witch.',
-			],
+			audioFile: witchesBlackCatSelectionAudio,
 			setPlayer: (player: Player) => {
 				setWitchesSelection(player);
 				nextStep();
@@ -79,10 +81,7 @@ export function useSelection() {
 			stage: 'vocal-instruction',
 			audience: 'Witches',
 			instructionalText: 'Close your eyes.',
-			moderatorSpeech: [
-				'The witches have made their choice.',
-				'Witches, close your eyes.',
-			],
+			audioFile: witchesCompletedSeletionAudio,
 			setPlayer: () => {},
 			playerToReveal: null,
 			autoNext: true,
@@ -93,7 +92,7 @@ export function useSelection() {
 			stage: 'vocal-instruction',
 			audience: 'Players',
 			instructionalText: 'Open your eyes.',
-			moderatorSpeech: ['Everyone, open your eyes.'],
+			audioFile: allOpenEyesAudio,
 			setPlayer: () => {},
 			playerToReveal: null,
 			autoNext: true,
@@ -115,10 +114,7 @@ export function useSelection() {
 			stage: 'vocal-instruction',
 			audience: 'Players',
 			instructionalText: 'Close your eyes.',
-			moderatorSpeech: [
-				'All players close your eyes.',
-				"Everyone's eyes should be closed.",
-			],
+			audioFile: allCloseEyesAudio,
 			setPlayer: () => {},
 			playerToReveal: null,
 			autoNext: true,
@@ -129,9 +125,7 @@ export function useSelection() {
 			stage: 'player-selection',
 			audience: 'Witches',
 			instructionalText: 'Select a player to kill. You may select yourself.',
-			moderatorSpeech: [
-				'If you have, or have ever had a witch card, open your eyes, and choose any player to kill. You may even choose a witch.',
-			],
+			audioFile: witchesInitialKillSelectionAudio,
 			setPlayer: (player: Player) => {
 				setWitchesSelection(player);
 				nextStep();
@@ -143,10 +137,7 @@ export function useSelection() {
 			stage: 'vocal-instruction',
 			audience: 'Witches',
 			instructionalText: 'Close your eyes.',
-			moderatorSpeech: [
-				'The witches have made their choice.',
-				'Witches, close your eyes.',
-			],
+			audioFile: witchesCompletedSeletionAudio,
 			setPlayer: () => {},
 			playerToReveal: null,
 			autoNext: true,
@@ -159,9 +150,7 @@ export function useSelection() {
 			audience: 'Constable',
 			instructionalText:
 				'Select a player to protect. You may NOT select yourself.',
-			moderatorSpeech: [
-				'Constable, open your eyes and choose a player to protect this night. You cannot choose yourself!',
-			],
+			audioFile: constableInitialProtectionSelectionAudio,
 			setPlayer: (player: Player) => {
 				setConstableSelection(player);
 				nextStep();
@@ -174,10 +163,7 @@ export function useSelection() {
 			stage: 'vocal-instruction',
 			audience: 'Constable',
 			instructionalText: 'Close your eyes.',
-			moderatorSpeech: [
-				'The constable has made their choice.',
-				'Constable, close your eyes.',
-			],
+			audioFile: constableCompletedSelectionAudio,
 			setPlayer: () => {},
 			playerToReveal: null,
 			autoNext: true,
@@ -188,7 +174,7 @@ export function useSelection() {
 			stage: 'vocal-instruction',
 			audience: 'Players',
 			instructionalText: 'Open your eyes.',
-			moderatorSpeech: ['Everyone, open your eyes.'],
+			audioFile: allOpenEyesAudio,
 			setPlayer: () => {},
 			playerToReveal: null,
 			autoNext: true,
@@ -238,33 +224,24 @@ export function useSelection() {
 	const currentStep = phase === 'dawn' ? dawnSteps[step] : nightSteps[step];
 
 	useEffect(() => {
-		window.speechSynthesis.cancel();
 		window.clearTimeout(speechDelayTimer);
-		if (phase && currentStep.moderatorSpeech && instructionSpeech) {
-			const queue = [...currentStep.moderatorSpeech];
-			const speakNext = () => {
-				if (!queue.length) {
-					return;
-				}
-				const currentSpeech = queue.shift();
-				const utterance = new SpeechSynthesisUtterance(currentSpeech);
-				utterance.voice = voice;
-				utterance.rate = 0.75;
-				utterance.pitch = 0.75;
-				utterance.onend = () => {
-					if (queue.length) {
-						speechDelayTimer = window.setTimeout(speakNext, 1000);
-					} else if (currentStep.autoNext) {
-						speechDelayTimer = window.setTimeout(() => {
-							currentStep.next?.();
-						}, 2000);
-					}
-				};
-				window.speechSynthesis.speak(utterance);
-			};
-			speakNext();
+
+		if (currentAudio) {
+			currentAudio.pause();
+			currentAudio.currentTime = 0;
 		}
-		if (
+
+		if (phase && currentStep.audioFile && instructionSpeech) {
+			currentAudio = new Audio(currentStep.audioFile);
+			currentAudio.play();
+			currentAudio.onended = () => {
+				if (currentStep.autoNext) {
+					speechDelayTimer = window.setTimeout(() => {
+						currentStep.next?.();
+					}, 2000);
+				}
+			};
+		} else if (
 			phase &&
 			!instructionSpeech &&
 			currentStep.noVoiceAutoNextTiming !== undefined
