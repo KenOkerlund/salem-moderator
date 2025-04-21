@@ -7,7 +7,7 @@ import highlightedPerson from '../../assets/images/highlighted-person.png';
 import ModeratorLogo from '../../assets/images/moderator-logo.svg';
 import catEyes from '../../assets/images/cat-eyesl.png';
 
-import styles from './Home.module.css';
+import styles from './home.module.css';
 import { useSalemStore } from '../../stores/salem-store';
 
 function Home() {
