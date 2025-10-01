@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { useSalemStore } from '../../stores/salem-store';
 
@@ -26,7 +26,6 @@ import constableInitialProtectionSelectionAudio from '../../assets/audio/constab
 import constableCompletedSelectionAudio from '../../assets/audio/constable-completed-selection.mp3';
 
 let speechDelayTimer: number | undefined = undefined;
-let currentAudio: HTMLAudioElement | undefined = undefined;
 
 export function useSelection() {
 	const phase = useSalemStore((state) => state.phase);
@@ -51,6 +50,88 @@ export function useSelection() {
 	);
 
 	const nextStep = () => setStep(step + 1);
+
+	// Audio references to persist across renders
+	const audioRefs = useRef<Map<string, HTMLAudioElement>>(new Map());
+
+	// Preload audio files on component mount
+	useEffect(() => {
+		const audioFiles = [
+			allCloseEyesAudio,
+			witchesBlackCatSelectionAudio,
+			witchesCompletedSeletionAudio,
+			allOpenEyesAudio,
+			witchesInitialKillSelectionAudio,
+			constableInitialProtectionSelectionAudio,
+			constableCompletedSelectionAudio,
+		];
+
+		audioFiles.forEach((src) => {
+			if (!audioRefs.current.has(src)) {
+				const audio = new Audio(src);
+				audio.preload = 'auto';
+				audio.load();
+				audioRefs.current.set(src, audio);
+			}
+		});
+
+		// Cleanup audio elements on unmount
+		return () => {
+			audioRefs.current.forEach((audio) => {
+				audio.pause();
+				audio.currentTime = 0;
+			});
+			audioRefs.current.clear();
+			window.clearTimeout(speechDelayTimer);
+		};
+	}, []);
+
+	// Handle audio playback when step changes
+	useEffect(() => {
+		// Clear any existing timer
+		window.clearTimeout(speechDelayTimer);
+
+		// Stop any currently playing audio
+		audioRefs.current.forEach((audio) => {
+			audio.pause();
+			audio.currentTime = 0;
+		});
+
+		// Play audio if available and instructionSpeech is enabled
+		if (phase && currentStep.audioFile && instructionSpeech) {
+			const audio = audioRefs.current.get(currentStep.audioFile);
+			if (audio) {
+				audio.currentTime = 0;
+				audio.play().catch((error) => {
+					console.error('Audio playback failed:', error);
+				});
+				audio.onended = () => {
+					if (currentStep.autoNext) {
+						speechDelayTimer = window.setTimeout(() => {
+							currentStep.next?.();
+						}, 2000);
+					}
+				};
+			}
+		} else if (
+			phase &&
+			!instructionSpeech &&
+			currentStep.noVoiceAutoNextTiming !== undefined
+		) {
+			speechDelayTimer = window.setTimeout(() => {
+				currentStep.next?.();
+			}, currentStep.noVoiceAutoNextTiming * 1000);
+		}
+
+		// Cleanup on step change or unmount
+		return () => {
+			window.clearTimeout(speechDelayTimer);
+			audioRefs.current.forEach((audio) => {
+				audio.pause();
+				audio.currentTime = 0;
+			});
+		};
+	}, [phase, step, instructionSpeech]);
 
 	const dawnSteps: Step[] = [
 		{
@@ -222,35 +303,6 @@ export function useSelection() {
 	});
 
 	const currentStep = phase === 'dawn' ? dawnSteps[step] : nightSteps[step];
-
-	useEffect(() => {
-		window.clearTimeout(speechDelayTimer);
-
-		if (currentAudio) {
-			currentAudio.pause();
-			currentAudio.currentTime = 0;
-		}
-
-		if (phase && currentStep.audioFile && instructionSpeech) {
-			currentAudio = new Audio(currentStep.audioFile);
-			currentAudio.play();
-			currentAudio.onended = () => {
-				if (currentStep.autoNext) {
-					speechDelayTimer = window.setTimeout(() => {
-						currentStep.next?.();
-					}, 2000);
-				}
-			};
-		} else if (
-			phase &&
-			!instructionSpeech &&
-			currentStep.noVoiceAutoNextTiming !== undefined
-		) {
-			speechDelayTimer = window.setTimeout(() => {
-				currentStep.next?.();
-			}, currentStep.noVoiceAutoNextTiming * 1000);
-		}
-	}, [phase, currentStep, instructionSpeech]);
 
 	return {
 		...currentStep,
