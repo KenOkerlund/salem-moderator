@@ -75,13 +75,15 @@ export function useSelection() {
 			}
 		});
 
+		const currentRefAudios = audioRefs.current;
+
 		// Cleanup audio elements on unmount
 		return () => {
-			audioRefs.current.forEach((audio) => {
+			currentRefAudios.forEach((audio) => {
 				audio.pause();
 				audio.currentTime = 0;
 			});
-			audioRefs.current.clear();
+			currentRefAudios.clear();
 			window.clearTimeout(speechDelayTimer);
 		};
 	}, []);
@@ -123,14 +125,17 @@ export function useSelection() {
 			}, currentStep.noVoiceAutoNextTiming * 1000);
 		}
 
+		const currentRefAudios = audioRefs.current;
+
 		// Cleanup on step change or unmount
 		return () => {
 			window.clearTimeout(speechDelayTimer);
-			audioRefs.current.forEach((audio) => {
+			currentRefAudios.forEach((audio) => {
 				audio.pause();
 				audio.currentTime = 0;
 			});
 		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [phase, step, instructionSpeech]);
 
 	const dawnSteps: Step[] = [
