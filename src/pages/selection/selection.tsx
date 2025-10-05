@@ -164,10 +164,20 @@ export default function Selection() {
 						)}
 					</div>
 					<Footer
-						primaryButtonText="Abort"
-						onPrimaryClick={resetSelectionProcess}
-						secondaryButtonText={next ? 'Next' : undefined}
-						onSecondaryClick={next ? next : undefined}
+						buttons={[
+							<Button
+								variation="secondary"
+								key={'play'}
+								onClick={resetSelectionProcess}
+							>
+								Abort
+							</Button>,
+							next ? (
+								<Button key={'home'} onClick={next}>
+									Next
+								</Button>
+							) : null,
+						]}
 					/>
 				</>
 			)}
