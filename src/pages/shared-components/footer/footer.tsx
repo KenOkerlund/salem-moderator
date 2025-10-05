@@ -1,3 +1,4 @@
+import { ReactElement } from 'react';
 import clsx from 'clsx';
 import Button from '../../../components/button/button';
 import styles from './footer.module.css';
@@ -8,6 +9,7 @@ type FooterProps = {
 	primaryButtonText?: string | null;
 	onSecondaryClick?: () => void;
 	secondaryButtonText?: string | null;
+	buttons?: (ReactElement<typeof Button> | null)[];
 };
 
 export function Footer(props: FooterProps) {
@@ -17,6 +19,7 @@ export function Footer(props: FooterProps) {
 		primaryButtonText,
 		onSecondaryClick,
 		secondaryButtonText,
+		buttons = [],
 	} = props;
 
 	const classes = clsx(styles.footer, {
@@ -25,19 +28,25 @@ export function Footer(props: FooterProps) {
 
 	return (
 		<footer className={classes}>
-			{primaryButtonText && (
-				<Button disabled={!onPrimaryClick} onClick={onPrimaryClick}>
-					{primaryButtonText}
-				</Button>
-			)}
-			{secondaryButtonText && (
-				<Button
-					disabled={!onSecondaryClick}
-					onClick={onSecondaryClick}
-					variation="secondary"
-				>
-					{secondaryButtonText}
-				</Button>
+			{buttons.length > 0 ? (
+				buttons
+			) : (
+				<>
+					{primaryButtonText && (
+						<Button disabled={!onPrimaryClick} onClick={onPrimaryClick}>
+							{primaryButtonText}
+						</Button>
+					)}
+					{secondaryButtonText && (
+						<Button
+							disabled={!onSecondaryClick}
+							onClick={onSecondaryClick}
+							variation="secondary"
+						>
+							{secondaryButtonText}
+						</Button>
+					)}
+				</>
 			)}
 		</footer>
 	);
