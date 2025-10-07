@@ -1,4 +1,4 @@
-import { useMediaQuery } from 'react-responsive';
+import clsx from 'clsx';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 import { useSelection } from './use-selection';
 import { formatPlayerName } from '../../utils/format-player-name';
@@ -28,6 +28,7 @@ export default function Selection() {
 	const resetSelectionProcess = useSalemStore(
 		(state) => state.resetSelectionProcess,
 	);
+	const isRevealing = useSalemStore((state) => state.isRevealing);
 	const setIsRevealing = useSalemStore((state) => state.setIsRevealing);
 	const {
 		instructionalText,
@@ -38,10 +39,6 @@ export default function Selection() {
 		next,
 		noVoiceAutoNextTiming,
 	} = useSelection();
-
-	const isSmallScreen = useMediaQuery({
-		query: '(max-width: 600px)',
-	});
 
 	const NoVocalCountdown = () => (
 		<CountdownCircleTimer
@@ -128,32 +125,53 @@ export default function Selection() {
 							<p className={styles.instructions}>{instructionalText}</p>
 						</div>
 						{stage === 'player-selection' && (
-							<div className={styles.playerSelectionButtons}>
-								{players.map((player) => {
-									return (
-										<Button
-											key={player.id}
-											onClick={() => setPlayer(player)}
-											size={isSmallScreen ? 'large' : 'largest'}
-											holdDuration={1.5}
-											width={100}
-										>
-											{formatPlayerName(player)}
-										</Button>
-									);
-								})}
+							<div className={styles.playerSelectionContainer}>
+								<div
+									className={clsx(styles.playerSelectionButtons, {
+										[styles.playerSelectionButtonsSingleColumn]:
+											players.length === 4,
+									})}
+								>
+									{players.map((player) => {
+										return (
+											<Button
+												// className={styles.playerSelectionButton}
+												key={player.id}
+												onClick={() => setPlayer(player)}
+												size="unset"
+												customClassName={styles.playerSelectionButton}
+											>
+												{formatPlayerName(player)}
+											</Button>
+										);
+									})}
+								</div>
 							</div>
 						)}
 						{stage === 'reveal' && (
-							<div>
-								<Button
-									onClick={() => setIsRevealing(true)}
-									size="largest"
-									disabled={!!playerToReveal}
-									holdDuration={1.5}
-								>
-									{playerToReveal ? formatPlayerName(playerToReveal) : 'Reveal'}
-								</Button>
+							<div className={styles.revealingStage}>
+								{!isRevealing && (
+									<Button
+										onClick={() => setIsRevealing(true)}
+										size="largest"
+										disabled={!!playerToReveal}
+										holdDuration={1.5}
+									>
+										{playerToReveal
+											? formatPlayerName(playerToReveal)
+											: 'Reveal'}
+									</Button>
+								)}
+								{isRevealing && playerToReveal && (
+									<div className={styles.revealingStage}>
+										<h4 className={styles.chosenPlayerHeader}>
+											Chosen Player:
+										</h4>
+										<p className={styles.chosenPlayerName}>
+											{formatPlayerName(playerToReveal)}
+										</p>
+									</div>
+								)}
 							</div>
 						)}
 						{stage === 'vocal-instruction' && (
@@ -164,10 +182,20 @@ export default function Selection() {
 						)}
 					</div>
 					<Footer
-						primaryButtonText="Abort"
-						onPrimaryClick={resetSelectionProcess}
-						secondaryButtonText={next ? 'Next' : undefined}
-						onSecondaryClick={next ? next : undefined}
+						buttons={[
+							<Button
+								variation="secondary"
+								key={'play'}
+								onClick={resetSelectionProcess}
+							>
+								Abort
+							</Button>,
+							next ? (
+								<Button key={'home'} onClick={next}>
+									Next
+								</Button>
+							) : null,
+						]}
 					/>
 				</>
 			)}

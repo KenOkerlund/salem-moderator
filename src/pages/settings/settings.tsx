@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useSalemStore } from '../../stores/salem-store';
 import { Footer } from '../shared-components/footer/footer';
+import Button from '../../components/button/button';
 import PlayersList from '../settings/player-settings';
 import ResetSettings from '../settings/reset-settings';
 import LineBreak from '../../components/line-break/line-break';
@@ -38,10 +39,18 @@ function Settings() {
 			</div>
 			<Footer
 				autoLeft
-				onPrimaryClick={() => navigate('/selection')}
-				primaryButtonText="Play"
-				onSecondaryClick={() => navigate('/')}
-				secondaryButtonText="Return Home"
+				buttons={[
+					<Button key={'play'} onClick={() => navigate('/selection')}>
+						Play
+					</Button>,
+					<Button
+						variation="secondary"
+						key={'home'}
+						onClick={() => navigate('/')}
+					>
+						Home
+					</Button>,
+				]}
 			/>
 		</>
 	);

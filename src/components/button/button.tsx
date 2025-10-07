@@ -5,13 +5,15 @@ import styles from './button.module.css';
 type ButtonProps = {
 	children: ReactNode;
 	variation?: 'primary' | 'secondary';
-	size?: 'small' | 'medium' | 'large' | 'largest';
+	size?: 'small' | 'medium' | 'large' | 'largest' | 'unset';
 	onClick?: () => void;
 	holdDuration?: number;
 	disabled?: boolean;
 	width?: 100;
+	height?: 100;
 	iconOnly?: boolean;
 	rotateContent?: boolean;
+	customClassName?: string;
 };
 
 function Button(props: ButtonProps) {
@@ -22,9 +24,11 @@ function Button(props: ButtonProps) {
 		onClick,
 		disabled,
 		width,
+		height,
 		iconOnly = false,
 		rotateContent,
 		holdDuration,
+		customClassName = '',
 	} = props;
 
 	const buttonRef = useRef<HTMLButtonElement | null>(null);
@@ -38,10 +42,12 @@ function Button(props: ButtonProps) {
 		[styles.largest]: size === 'largest',
 		[styles.secondary]: variation === 'secondary',
 		[styles.fullWidth]: width === 100,
+		[styles.fullHeight]: height === 100,
 		[styles.iconOnly]: iconOnly,
 		[styles.disabled]: disabled,
 		[styles.rotateContent]: rotateContent,
 		[styles.holdAnimation]: holdDuration && isHeld,
+		[customClassName]: !!customClassName,
 	});
 
 	const resetHover = () => {
