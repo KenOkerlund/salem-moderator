@@ -40,15 +40,15 @@ function Settings() {
 			<Footer
 				autoLeft
 				buttons={[
-					<Button key={'play'} onClick={() => navigate('/selection')}>
-						Play
-					</Button>,
 					<Button
 						variation="secondary"
 						key={'home'}
 						onClick={() => navigate('/')}
 					>
 						Home
+					</Button>,
+					<Button key={'play'} onClick={() => navigate('/selection')}>
+						Play
 					</Button>,
 				]}
 			/>
